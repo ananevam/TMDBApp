@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		041A41C72D3A8C19003CFA51 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 041A41C62D3A8C19003CFA51 /* Podfile */; };
+		041A41F92D3A8E53003CFA51 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 041A41F82D3A8E4F003CFA51 /* .gitignore */; };
 		171FFADF585530C8183C0EFE /* Pods_TMDBTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDDEEC7A04888A785EB56FAF /* Pods_TMDBTests.framework */; };
 		241918CE417A01DE39E62C99 /* Pods_TMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2AF4BDFE1D217995F62AD77 /* Pods_TMDB.framework */; };
 		FFF7DBD3EC0F5BF10198A8B2 /* Pods_TMDB_TMDBUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6CD7B271C4C9F8758A069BF /* Pods_TMDB_TMDBUITests.framework */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		00C5AF1CB41159762821DA5D /* Pods-TMDB-TMDBUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDB-TMDBUITests.release.xcconfig"; path = "Target Support Files/Pods-TMDB-TMDBUITests/Pods-TMDB-TMDBUITests.release.xcconfig"; sourceTree = "<group>"; };
 		041A41C62D3A8C19003CFA51 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		041A41F82D3A8E4F003CFA51 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		04A1AFD92D364D370088E4C6 /* TMDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A1AFE92D364D390088E4C6 /* TMDBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TMDBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A1AFF32D364D390088E4C6 /* TMDBUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TMDBUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +97,7 @@
 		04A1AFD02D364D370088E4C6 = {
 			isa = PBXGroup;
 			children = (
+				041A41F82D3A8E4F003CFA51 /* .gitignore */,
 				04A1AFDB2D364D370088E4C6 /* TMDB */,
 				04A1AFEC2D364D390088E4C6 /* TMDBTests */,
 				04A1AFF62D364D390088E4C6 /* TMDBUITests */,
@@ -149,6 +152,7 @@
 				04A1AFD52D364D370088E4C6 /* Sources */,
 				04A1AFD62D364D370088E4C6 /* Frameworks */,
 				04A1AFD72D364D370088E4C6 /* Resources */,
+				0B224FB2C72454A1C961B7B6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -192,6 +196,7 @@
 				04A1AFEF2D364D390088E4C6 /* Sources */,
 				04A1AFF02D364D390088E4C6 /* Frameworks */,
 				04A1AFF12D364D390088E4C6 /* Resources */,
+				0DD0EBE699F674218B68B9A0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -255,6 +260,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				041A41F92D3A8E53003CFA51 /* .gitignore in Resources */,
 				041A41C72D3A8C19003CFA51 /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,6 +282,40 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0B224FB2C72454A1C961B7B6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TMDB/Pods-TMDB-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TMDB/Pods-TMDB-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TMDB/Pods-TMDB-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0DD0EBE699F674218B68B9A0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TMDB-TMDBUITests/Pods-TMDB-TMDBUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TMDB-TMDBUITests/Pods-TMDB-TMDBUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TMDB-TMDBUITests/Pods-TMDB-TMDBUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4F6D4AEF71D5711DB35258FC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

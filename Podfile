@@ -6,6 +6,7 @@ target 'TMDB' do
   use_frameworks!
 
   # Pods for TMDB
+  pod 'Alamofire'
 
   target 'TMDBTests' do
     inherit! :search_paths
