@@ -9,33 +9,26 @@ class MovieViewModel: ObservableObject {
     @Published var error: String?
 
     private let apiKey = SecretsManager.shared.getValue(forKey: "API_KEY")
-    private var cancellables = Set<AnyCancellable>()
+
+    init() {
+        fetchPopularMovies()
+    }
 
     func fetchPopularMovies() {
-        loading = true
-        error = nil
+        let url = "https://api.themoviedb.org/3/movie/popular?api_key=\(apiKey)&language=ru-RU"
 
-      guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=\(apiKey)&language=ru-RU") else {
-            self.error = "Invalid URL"
+        self.loading = true
+        self.error = nil
+        AF.request(url).responseDecodable(of: MoviesResponse.self) {[weak self] response in
+            guard let self else { return }
             self.loading = false
-            return
-      }
 
-      AF.request(url)
-          .validate()
-          .publishDecodable(type: MoviesResponse.self)
-          .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { completion in
-            switch completion {
-            case .finished:
-                self.loading = false
-            case .failure(let err):
-                self.error = err.localizedDescription
-                self.loading = false
+            switch response.result {
+            case .success(let data):
+                self.movies = data.results
+            case .failure(let error):
+                self.error = error.localizedDescription
             }
-        }, receiveValue: { [weak self] response in
-              self?.movies = response.value?.results ?? []
-        })
-          .store(in: &cancellables)
+        }
     }
 }

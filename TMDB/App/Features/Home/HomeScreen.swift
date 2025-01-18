@@ -12,24 +12,23 @@ struct HomeScreen: View {
                     Text("Error \(error)")
                 } else {
                     List(viewModel.movies) { movie in
-                        HStack {
-                            if let posterPath = movie.posterPath {
-                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)")) { image in
-                                    image.resizable()
-                                } placeholder: {
-                                    ProgressView()
+                        NavigationLink(destination: MovieDetailScreen(movie: movie)) {
+                            HStack {
+                                if let posterPath = movie.posterPath {
+                                    AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)")) { image in
+                                        image.resizable()
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .frame(width: 50, height: 75)
                                 }
-                                .frame(width: 50, height: 75)
+                                Text(movie.title)
                             }
-                            Text(movie.title)
                         }
                     }
                 }
             }
             .navigationTitle("Популярные фильмы")
-            .onAppear {
-                viewModel.fetchPopularMovies()
-            }
         }
     }
 }
