@@ -11,7 +11,6 @@ struct Movie: Codable, Identifiable {
     }
 }
 
-
 struct MoviesResponse: Codable {
     let results: [Movie]
 }

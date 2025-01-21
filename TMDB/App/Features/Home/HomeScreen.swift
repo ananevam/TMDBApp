@@ -6,11 +6,7 @@ struct HomeScreen: View {
     var body: some View {
         NavigationView {
             VStack {
-                if viewModel.loading {
-                    ProgressView("Loading...")
-                } else if let error = viewModel.error {
-                    Text("Error \(error)")
-                } else {
+                LoadingErrorView(viewModel: viewModel) {
                     List(viewModel.movies) { movie in
                         NavigationLink(destination: MovieDetailScreen(movie: movie)) {
                             HStack {
@@ -27,8 +23,9 @@ struct HomeScreen: View {
                         }
                     }
                 }
-            }
-            .navigationTitle("Популярные фильмы")
+            }.navigationTitle("Популярные фильмы")
+        }.task {
+            viewModel.fetch()
         }
     }
 }
