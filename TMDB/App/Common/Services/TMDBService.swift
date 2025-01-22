@@ -29,8 +29,8 @@ class TMDBService {
         }
     }
     
-    func getMovie(_ id: Int, completion: @escaping (Result<Movie, Error>) -> Void) {
-        request("movie/\(id)").responseDecodable(of: Movie.self) { response in
+    func getMovie(_ id: Int, completion: @escaping (Result<MovieDetail, Error>) -> Void) {
+        request("movie/\(id)").responseDecodable(of: MovieDetail.self) { response in
             switch response.result {
             case .success(let movieResponse):
                 completion(.success(movieResponse))

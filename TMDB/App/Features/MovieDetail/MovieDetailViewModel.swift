@@ -2,7 +2,7 @@ import SwiftUI
 import Alamofire
 
 
-class MovieDetailViewModel: BaseScreenViewModel<Movie> {
+class MovieDetailViewModel: BaseScreenViewModel<MovieDetail> {
     let movieId: Int
 
     init(movieId: Int) {

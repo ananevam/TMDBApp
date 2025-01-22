@@ -8,7 +8,7 @@ struct MovieDetailScreen: View {
     var body: some View {
         NavigationView {
             LoadingErrorView(viewModel: viewModel) { movie in
-                Group {
+                VStack {
                     Text(movie.title)
                     if let posterPath = movie.posterPath {
                         AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)")) { image in

@@ -13,7 +13,6 @@ class BaseScreenViewModel<Data>: ObservableObject {
         state = .loading
 
         request { [weak self] result in
-            sleep(1)
             switch result {
             case .success(let data):
                 completion(data)
