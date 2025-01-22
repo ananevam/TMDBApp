@@ -1,21 +1,24 @@
 import SwiftUI
 
-class BaseScreenViewModel: ObservableObject {
-    @Published var isLoading: Bool = false
-    @Published var error: String? = nil
+class BaseScreenViewModel<Data>: ObservableObject {
+    @Published var state: State = .loading
+
+    enum State {
+        case loading
+        case success(Data)
+        case failure(String)
+    }
 
     func execute<T>(request: @escaping (@escaping (Result<T, Error>) -> Void) -> Void, completion: @escaping (T) -> Void) {
-        isLoading = true
-        error = nil
+        state = .loading
 
         request { [weak self] result in
             sleep(1)
-            self?.isLoading = false
             switch result {
             case .success(let data):
                 completion(data)
             case .failure(let err):
-                self?.error = err.localizedDescription
+                self?.state = .failure(err.localizedDescription)
             }
         }
     }

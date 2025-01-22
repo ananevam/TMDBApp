@@ -2,12 +2,10 @@ import SwiftUI
 import Alamofire
 
 
-class MovieViewModel: BaseScreenViewModel {
-    @Published var movies: [Movie] = []
-
+class HomeViewModel: BaseScreenViewModel<[Movie]> {
     func fetch() {
-        execute(request: TMDBService.shared.popularMoviesClosure) { [weak self] movies in
-            self?.movies = movies.results
+        execute(request: TMDBService.shared.getPopularMovies) { [weak self] movies in
+            self?.state = .success(movies.results)
         }
     }
 }

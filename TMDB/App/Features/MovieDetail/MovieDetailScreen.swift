@@ -1,16 +1,26 @@
 import SwiftUI
 
 struct MovieDetailScreen: View {
-    let movie: Movie
+    @StateObject private var viewModel: MovieDetailViewModel
+    init(movieId: Int) {
+        _viewModel = StateObject(wrappedValue: MovieDetailViewModel(movieId: movieId))
+    }
     var body: some View {
         NavigationView {
-            if let posterPath = movie.posterPath {
-                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)")) { image in
-                    image.resizable()
-                } placeholder: {
-                    ProgressView()
+            LoadingErrorView(viewModel: viewModel) { movie in
+                Group {
+                    Text(movie.title)
+                    if let posterPath = movie.posterPath {
+                        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)")) { image in
+                            image.resizable()
+                        } placeholder: {
+                            ProgressView()
+                        }
+                    }
                 }
             }
-        }.navigationTitle(movie.title)
+        }.task {
+            viewModel.fetch()
+        }
     }
 }

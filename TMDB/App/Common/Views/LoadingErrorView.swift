@@ -1,18 +1,17 @@
 import SwiftUI
 
-struct LoadingErrorView<Content: View>: View {
-    var viewModel: BaseScreenViewModel
-    let content: () -> Content
+struct LoadingErrorView<T, Content: View>: View {
+    @ObservedObject var viewModel: BaseScreenViewModel<T>
+    let content: (T) -> Content
 
     var body: some View {
-        Group {
-            if viewModel.isLoading {
-                ProgressView("Loading...")
-            } else if let error = viewModel.error {
-                Text("Error \(error)")
-            } else {
-                content()
-            }
+        switch viewModel.state {
+        case .loading:
+            ProgressView("Loading...")
+        case .failure(let error):
+            Text("Error \(error)")
+        case .success(let result):
+            content(result)
         }
     }
 }

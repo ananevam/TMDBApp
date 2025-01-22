@@ -1,14 +1,14 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    @StateObject var viewModel = MovieViewModel()
+    @StateObject var viewModel = HomeViewModel()
     
     var body: some View {
         NavigationView {
             VStack {
-                LoadingErrorView(viewModel: viewModel) {
-                    List(viewModel.movies) { movie in
-                        NavigationLink(destination: MovieDetailScreen(movie: movie)) {
+                LoadingErrorView(viewModel: viewModel) { movies in
+                    List(movies) { movie in
+                        NavigationLink(destination: MovieDetailScreen(movieId: movie.id)) {
                             HStack {
                                 if let posterPath = movie.posterPath {
                                     AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)")) { image in
