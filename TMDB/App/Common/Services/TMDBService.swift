@@ -16,7 +16,7 @@ class TMDBService {
     }
     
     func getPopularMoviesAsync() async throws -> MoviesResponse  {
-        sleep(2)
+        sleep(1)
         return try await request("movie/popular").serializingDecodable(MoviesResponse.self).value
     }
 

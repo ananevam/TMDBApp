@@ -1,4 +1,5 @@
 import SwiftUI
+import Kingfisher
 
 struct HomeScreen: View {
     @StateObject var viewModel = HomeViewModelAsync()
@@ -8,7 +9,7 @@ struct HomeScreen: View {
             VStack {
                 LoadingErrorView(viewModel: viewModel) { state in
                     List {
-                        section(title: "Popular movies", movies: state.popularMovies)
+                        horizontalSection(title: "Popular movies", movies: state.popularMovies)
                         section(title: "Trending movies", movies: state.trendingMovies)
                     }
                 }
@@ -18,18 +19,46 @@ struct HomeScreen: View {
         }
     }
     
+    private func horizontalSection(title: String, movies: [Movie]) -> some View {
+        Section(header: Text(title)) {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 16) {
+                    ForEach(movies) { movie in
+                        NavigationLink(destination: MovieDetailScreen(movieId: movie.id)) {
+                            VStack {
+                                if let posterPath = movie.posterPath {
+                                    KFImage(URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"))
+                                        .placeholder {
+                                            ProgressView()
+                                        }
+                                        .resizable()
+                                        .frame(width: 120, height: 180)
+                                        .cornerRadius(8)
+                                }
+                                Text(movie.title)
+                                    .font(.caption)
+                                    .lineLimit(1)
+                                    .frame(width: 120)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private func section(title: String, movies: [Movie]) -> some View {
         Section(header: Text(title)) {
             ForEach(movies) { movie in
                 NavigationLink(destination: MovieDetailScreen(movieId: movie.id)) {
                     HStack {
                         if let posterPath = movie.posterPath {
-                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)")) { image in
-                                image.resizable()
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .frame(width: 50, height: 75)
+                            KFImage(URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"))
+                                .placeholder {
+                                    ProgressView()
+                                }
+                                .resizable()
+                                .frame(width: 50, height: 75)
                         }
                         Text(movie.title)
                     }
