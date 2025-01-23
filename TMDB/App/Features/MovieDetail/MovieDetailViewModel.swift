@@ -2,7 +2,7 @@ import SwiftUI
 import Alamofire
 
 
-class MovieDetailViewModel: BaseScreenViewModel<MovieDetail> {
+class MovieDetailViewModel: BaseScreenViewModelClosure<MovieDetail> {
     let movieId: Int
 
     init(movieId: Int) {

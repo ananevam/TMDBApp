@@ -9,7 +9,9 @@ class BaseScreenViewModel<Data>: ObservableObject {
         case success(Data)
         case failure(String)
     }
+}
 
+class BaseScreenViewModelClosure<Data>: BaseScreenViewModel<Data> {
     func execute<T>(request: @escaping (@escaping (DataResponse<T, AFError>) -> Void) -> Void, completion: @escaping (T) -> Void) {
         state = .loading
 
@@ -21,5 +23,21 @@ class BaseScreenViewModel<Data>: ObservableObject {
                 self?.state = .failure(err.localizedDescription)
             }
         }
+    }
+}
+
+class BaseScreenViewModelAsync<Data>: BaseScreenViewModel<Data> {
+    @MainActor
+    func load() async {
+        state = .loading
+        do {
+            let result = try await fetch()
+            self.state = .success(result)
+        } catch let error {
+            self.state = .failure(error.localizedDescription)
+        }
+    }
+    public func fetch() async throws -> Data {
+        fatalError("Method `fetch` must be overridden in a subclass")
     }
 }
