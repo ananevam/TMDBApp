@@ -1,4 +1,5 @@
 import SwiftUI
+import Alamofire
 
 class BaseScreenViewModel<Data>: ObservableObject {
     @Published var state: State = .loading
@@ -9,11 +10,11 @@ class BaseScreenViewModel<Data>: ObservableObject {
         case failure(String)
     }
 
-    func execute<T>(request: @escaping (@escaping (Result<T, Error>) -> Void) -> Void, completion: @escaping (T) -> Void) {
+    func execute<T>(request: @escaping (@escaping (DataResponse<T, AFError>) -> Void) -> Void, completion: @escaping (T) -> Void) {
         state = .loading
 
-        request { [weak self] result in
-            switch result {
+        request { [weak self] response in
+            switch response.result {
             case .success(let data):
                 completion(data)
             case .failure(let err):
