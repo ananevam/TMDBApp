@@ -1,7 +1,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var theme: ThemeManager
+
     var body: some View {
-        HomeScreen()
+        NavigationStack {
+            ZStack {
+                theme.background.ignoresSafeArea()
+                HomeScreen()
+            }
+        }
     }
 }

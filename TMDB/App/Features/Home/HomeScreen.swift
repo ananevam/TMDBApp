@@ -5,16 +5,14 @@ struct HomeScreen: View {
     @StateObject var viewModel = HomeViewModelAsync()
     
     var body: some View {
-        NavigationView {
-            VStack {
-                LoadingErrorView(viewModel: viewModel) { state in
-                    List {
-                        horizontalSection(title: "Popular movies", movies: state.popularMovies)
-                        section(title: "Trending movies", movies: state.trendingMovies)
-                    }
-                }
-            }.navigationTitle("Movies")
-        }.task {
+        VStack {
+            LoadingErrorView(viewModel: viewModel) { state in
+                List {
+                    horizontalSection(title: "Popular movies", movies: state.popularMovies)
+                    section(title: "Trending movies", movies: state.trendingMovies)
+                }.scrollContentBackground(.hidden)
+            }
+        }.navigationTitle("Movies").task {
             await viewModel.load()
         }
     }
@@ -44,7 +42,7 @@ struct HomeScreen: View {
                     }
                 }
             }
-        }
+        }.listRowBackground(Color.clear)
     }
     
     private func section(title: String, movies: [Movie]) -> some View {
@@ -64,6 +62,6 @@ struct HomeScreen: View {
                     }
                 }
             }
-        }
+        }.listRowBackground(Color.clear)
     }
 }
