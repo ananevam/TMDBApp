@@ -2,12 +2,13 @@ import SwiftUI
 
 struct MovieDetailScreen: View {
     @StateObject private var viewModel: MovieDetailViewModel
+    @EnvironmentObject var theme: ThemeManager
     init(movieId: Int) {
         _viewModel = StateObject(wrappedValue: MovieDetailViewModel(movieId: movieId))
     }
     let colors: [Color] = [.red, .green, .blue]
     var body: some View {
-        Group {
+        Screen {
             LoadingErrorView(viewModel: viewModel) { (movie: MovieDetail) in
                 ScrollView {
                     VStack(spacing: 16) {
@@ -22,9 +23,9 @@ struct MovieDetailScreen: View {
 
                     }
                 }.navigationTitle(movie.title).navigationBarTitleDisplayMode(.inline)
-            }.task {
-                viewModel.fetch()
             }
+        }.task {
+            viewModel.fetch()
         }
     }
     

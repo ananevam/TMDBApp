@@ -3,16 +3,19 @@ import Kingfisher
 
 struct HomeScreen: View {
     @StateObject var viewModel = HomeViewModelAsync()
-    
+    @EnvironmentObject var theme: ThemeManager
+
     var body: some View {
-        VStack {
-            LoadingErrorView(viewModel: viewModel) { state in
-                List {
-                    horizontalSection(title: "Popular movies", movies: state.popularMovies)
-                    section(title: "Trending movies", movies: state.trendingMovies)
-                }.scrollContentBackground(.hidden)
-            }
-        }.navigationTitle("Movies").task {
+        Screen {
+            VStack {
+                LoadingErrorView(viewModel: viewModel) { state in
+                    List {
+                        horizontalSection(title: "Popular movies", movies: state.popularMovies)
+                        section(title: "Trending movies", movies: state.trendingMovies)
+                    }.scrollContentBackground(.hidden)
+                }
+            }.navigationTitle("Movies")
+        }.onLoad {
             await viewModel.load()
         }
     }
