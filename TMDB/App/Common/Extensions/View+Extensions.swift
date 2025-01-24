@@ -1,11 +1,10 @@
 import SwiftUI
 
 private struct ViewDidLoadModifier: ViewModifier {
-
     @State private var didLoad = false
     private let action: () async -> Void
 
-    init(perform action: @escaping () async -> Void) {
+    init(action: @escaping () async -> Void) {
         self.action = action
     }
 
@@ -20,8 +19,8 @@ private struct ViewDidLoadModifier: ViewModifier {
 }
 
 extension View {
-    func onLoad(perform action: @escaping () async -> Void) -> some View {
-        modifier(ViewDidLoadModifier(perform: action))
+    func onLoad(_ action: @escaping () async -> Void) -> some View {
+        modifier(ViewDidLoadModifier(action: action))
     }
 }
 
