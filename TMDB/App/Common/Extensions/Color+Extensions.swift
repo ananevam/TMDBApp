@@ -7,4 +7,7 @@ extension Color {
         let blue = Double(hex & 0xFF) / 255.0
         self.init(red: red, green: green, blue: blue, opacity: alpha)
     }
+    init(_ name: CustomColors) {
+        self.init(name.rawValue)
+    }
 }

@@ -15,9 +15,7 @@ struct HomeScreen: View {
                     }.scrollContentBackground(.hidden)
                 }
             }.navigationTitle("Movies")
-        }.onLoad {
-            await viewModel.load()
-        }
+        }.onLoad(viewModel.load)
     }
     
     private func horizontalSection(title: String, movies: [Movie]) -> some View {

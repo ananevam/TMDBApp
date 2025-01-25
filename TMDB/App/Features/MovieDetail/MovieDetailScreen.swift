@@ -24,9 +24,7 @@ struct MovieDetailScreen: View {
                     }
                 }.navigationTitle(movie.title).navigationBarTitleDisplayMode(.inline)
             }
-        }.task {
-            viewModel.fetch()
-        }
+        }.onLoad(viewModel.fetch)
     }
     
     private func poster(_ movie: MovieDetail) -> some View {
@@ -83,6 +81,7 @@ struct MovieDetailScreen: View {
     }
     
     private func buttons() -> some View {
+        
         HStack {
             Button(action: {
                 // Action to add to favorites
