@@ -5,7 +5,14 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            HomeScreen()
+            HomeScreen().navigationDestination(for: Screens.self) { screen in
+                switch screen {
+                case .home:
+                    HomeScreen()
+                case .movie(let movieId):
+                    MovieDetailScreen(movieId: movieId)
+                }
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ struct HomeScreen: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
                     ForEach(movies) { movie in
-                        NavigationLink(destination: MovieDetailScreen(movieId: movie.id)) {
+                        NavigationLink(value: Screens.movie(movie.id)) {
                             VStack {
                                 if let posterPath = movie.posterPath {
                                     KFImage(URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"))
@@ -49,7 +49,7 @@ struct HomeScreen: View {
     private func section(title: String, movies: [Movie]) -> some View {
         Section(header: Text(title)) {
             ForEach(movies) { movie in
-                NavigationLink(destination: MovieDetailScreen(movieId: movie.id)) {
+                NavigationLink(value: Screens.movie(movie.id)) {
                     HStack {
                         if let posterPath = movie.posterPath {
                             KFImage(URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"))
