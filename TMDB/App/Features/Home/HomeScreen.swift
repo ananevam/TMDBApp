@@ -9,25 +9,34 @@ struct HomeScreen: View {
         Screen {
             LoadingErrorView(viewModel: viewModel) { state in
                 ScrollView {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 36) {
                         ContentSectionView(title: "Popular movies") {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 16) {
-                                    ForEach(state.popularMovies) { movie in
-                                        MovieCardView(movie: movie)
-                                    }
-                                }
-                            }
+                            HMoviesListView(movies: state.popularMovies)
                         }
                         ContentSectionView(title: "Trending movies") {
-                            ForEach(state.trendingMovies) { movie in
-                                MovieListItemView(movie: movie)
-                            }
+                            HMoviesListView(movies: state.trendingMovies)
                         }
+//                        ContentSectionView(title: "Trending movies") {
+//                            ForEach(state.trendingMovies) { movie in
+//                                MovieListItemView(movie: movie)
+//                            }
+//                        }
                     }
-                }.padding([.leading, .trailing], 16)
+                }.contentMargins(.horizontal, 16)
             }.navigationTitle("Movies")
         }.onLoad(viewModel.load)
     }
+}
 
+private struct HMoviesListView: View {
+    let movies: [Movie]
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 16) {
+                ForEach(movies) { movie in
+                    MovieCardView(movie: movie)
+                }
+            }
+        }.scrollClipDisabled()
+    }
 }

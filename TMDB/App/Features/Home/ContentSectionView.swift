@@ -8,7 +8,7 @@ struct ContentSectionView<Content: View>: View {
         self.content = content
     }
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 16) {
             Text(title).font(.system(size: 22, weight: .bold))
             content()
         }

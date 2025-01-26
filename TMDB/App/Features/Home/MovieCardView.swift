@@ -5,21 +5,23 @@ struct MovieCardView: View {
     let movie: Movie
     var body: some View {
         NavigationLink(value: Screens.movie(movie.id)) {
-            VStack {
+            VStack(spacing: 0) {
                 if let posterPath = movie.posterPath {
                     KFImage(URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"))
                         .placeholder {
                             ProgressView()
                         }
                         .resizable()
-                        .frame(width: 120, height: 180)
-                        .cornerRadius(8)
+                        .aspectRatio(CGSize(width: 2, height: 3), contentMode: .fit)
+                        .cornerRadius(12)
                 }
-                Text(movie.title)
-                    .font(.caption)
-                    .lineLimit(1)
-                    .frame(width: 120)
-            }
-        }
+                VStack(alignment: .leading) {
+                    Text(movie.title)
+                        .font(.system(size: 16))
+                        .lineLimit(2)
+                }.padding(16)
+                Spacer()
+            }.frame(width: (UIScreen.main.bounds.width - 16 * 5) / 2).background(Color(.cardBackground)).cornerRadius(12)
+        }.foregroundColor(.white)
     }
 }
