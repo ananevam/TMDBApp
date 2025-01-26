@@ -1,4 +1,5 @@
 import SwiftUI
+import Kingfisher
 
 struct MovieDetailScreen: View {
     @StateObject private var viewModel: MovieDetailViewModel
@@ -13,7 +14,9 @@ struct MovieDetailScreen: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         MoviePosterView(movie: movie)
-                        MovieInfoView(movie: movie)
+                        VStack {
+                            MovieInfoView(movie: movie)
+                        }.padding(.horizontal, 16)
                     }
                 }.navigationTitle(movie.title).navigationBarTitleDisplayMode(.inline)
             }
@@ -25,16 +28,12 @@ private struct MoviePosterView: View {
     let movie: MovieDetail
     var body: some View {
         Group {
-            if let backdropImageURL = movie.backdropImageURL {
-                AsyncImage(url: backdropImageURL) { image in
-                    image.resizable()
-                        .scaledToFill()
-                        .frame(height: 320)
-                } placeholder: {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .frame(height: 320)
-                }
+            if let backdropImageURL = movie.backdropImageURL(.w1280) {
+                KFImage
+                    .url(backdropImageURL)
+                    .resizable()
+                    .placeholder{ProgressView()}
+                    .aspectRatio(CGSize(width: 16, height: 9), contentMode: .fit)
             }
         }
     }
@@ -45,7 +44,7 @@ private struct MovieBlockView<Content: View>: View {
     let content: () -> Content
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(title).font(.title3)
+            Text(title).font(.title2)
             content()
         }
     }
@@ -53,15 +52,15 @@ private struct MovieBlockView<Content: View>: View {
 private struct MovieInfoView: View {
     let movie: MovieDetail
     var body: some View {
-        VStack {
-            VStack {
+        VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading) {
                 Text(movie.title).font(.title)
                 Text([
                     movie.status,
                     movie.releaseYear,
                     movie.runtimeFormatted
-                ].compactMap{$0}.joined(separator: " | "))
-                Text("Rate: \(movie.voteAverage, specifier: "%.1f")")
+                ].compactMap{$0}.joined(separator: " | ")).font(.footnote)
+                Text("Rate: \(movie.voteAverage, specifier: "%.1f")").font(.footnote)
             }
             MovieBlockView(title: "Synopsis") {
                 Text(movie.overview).font(.body)
@@ -71,6 +70,6 @@ private struct MovieInfoView: View {
                     Text(movie.genres.map{$0.name}.joined(separator: ", "))
                 }
             }
-        }
+        }.frame(maxWidth: .infinity)
     }
 }

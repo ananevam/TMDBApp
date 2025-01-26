@@ -17,11 +17,6 @@ struct HomeScreen: View {
                         ContentSectionView(title: "Trending movies") {
                             HMoviesListView(movies: state.trendingMovies)
                         }.padding(.horizontal, 16)
-//                        ContentSectionView(title: "Trending movies") {
-//                            ForEach(state.trendingMovies) { movie in
-//                                MovieListItemView(movie: movie)
-//                            }
-//                        }
                     }
                 }//.contentMargins(.horizontal, 16)
             }.navigationTitle("Movies")
@@ -47,15 +42,12 @@ private struct CarouselItemView: View {
     var body: some View {
         if let backdropImageURL = movie.backdropImageURL {
             NavigationLink(value: Screens.movie(movie.id)) {
-                AsyncImage(url: backdropImageURL) { image in
-                    image.resizable()
-                        .scaledToFill()
-                        .frame(height: 320)
-                } placeholder: {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .frame(height: 320)
-                }.frame(width: UIScreen.main.bounds.width).clipped()
+                KFImage
+                    .url(backdropImageURL)
+                    .resizable()
+                    .placeholder{ProgressView()}
+                    .aspectRatio(CGSize(width: 16, height: 9), contentMode: .fit)
+                    .frame(width: UIScreen.main.bounds.width)
                     .overlay(Text(movie.title).font(.system(size: 24, weight: .bold)).padding(16), alignment: .bottomLeading)
             }.foregroundColor(.white)
         }

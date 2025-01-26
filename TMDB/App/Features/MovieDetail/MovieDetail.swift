@@ -17,6 +17,20 @@ struct MovieDetail: Decodable {
     let tagline: String?
     let status: String
     
+    enum BackdropSizes: String {
+        case w300 = "w300"
+        case w780 = "w780"
+        case w1280 = "w1280"
+    }
+    enum PosterSizes: String {
+        case w92 = "w92"
+        case w154 = "w154"
+        case w185 = "w185"
+        case w342 = "w342"
+        case w500 = "w500"
+        case w780 = "w780"
+    }
+    
     struct Genre: Decodable {
         let id: Int
         let name: String
@@ -26,10 +40,18 @@ struct MovieDetail: Decodable {
         guard let posterPath = posterPath else { return nil }
         return URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
     }
+    func posterImageURL(_ size: PosterSizes = .w500) -> URL? {
+        guard let posterPath = posterPath else { return nil }
+        return URL(string: "https://image.tmdb.org/t/p/\(size.rawValue)\(posterPath)")
+    }
 
     var backdropImageURL: URL? {
         guard let backdropPath = backdropPath else { return nil }
-        return URL(string: "https://image.tmdb.org/t/p/w500\(backdropPath)")
+        return URL(string: "https://image.tmdb.org/t/p/w1280\(backdropPath)")
+    }
+    func backdropImageURL(_ size: BackdropSizes = .w780) -> URL? {
+        guard let backdropPath = backdropPath else { return nil }
+        return URL(string: "https://image.tmdb.org/t/p/\(size.rawValue)\(backdropPath)")
     }
     enum CodingKeys: String, CodingKey {
         case id
