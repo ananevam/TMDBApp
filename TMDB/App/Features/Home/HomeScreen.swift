@@ -54,15 +54,15 @@ private struct CarouselItemView: View {
     }
 }
 
-private struct HMoviesListView: View {
+struct HMoviesListView: View {
     let movies: [Movie]
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(spacing: 16) {
+            HStack(spacing: 16) {
                 ForEach(movies) { movie in
                     MovieCardView(movie: movie)
                 }
-            }
+            }.fixedSize(horizontal: false, vertical: true)
         }.scrollClipDisabled()
     }
 }

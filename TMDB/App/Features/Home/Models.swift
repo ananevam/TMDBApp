@@ -41,3 +41,42 @@ struct Movie: Codable, Identifiable {
 struct MoviesResponse: Codable {
     let results: [Movie]
 }
+
+extension Movie {
+    static var example: Movie {
+        Movie(
+            id: 1,
+            title: ["Example Movie", "Long example movie"].randomElement()!,
+            overview: "This is a description of the example movie.",
+            posterPath: "/d8Ryb8AunYAuycVKDp5HpdWPKgC.jpg",
+            backdropPath: "/b85bJfrTOSJ7M5Ox0yp4lxIxdG1.jpg",
+            releaseDate: "2023-12-31",
+            originalTitle: "Original Title",
+            originalLanguage: "en",
+            popularity: 100.0,
+            voteAverage: 8.5,
+            voteCount: 12345,
+            genreIDs: [28, 12, 16],
+            adult: false,
+            video: false
+        )
+    }
+    static func example(title: String) -> Movie {
+        Movie(
+            id: Int.random(in: 1000...9999),
+            title: title,
+            overview: "This is a description of the example movie.",
+            posterPath: "/d8Ryb8AunYAuycVKDp5HpdWPKgC.jpg",
+            backdropPath: "/b85bJfrTOSJ7M5Ox0yp4lxIxdG1.jpg",
+            releaseDate: "2023-12-31",
+            originalTitle: "Original Title",
+            originalLanguage: "en",
+            popularity: 100.0,
+            voteAverage: 8.5,
+            voteCount: 12345,
+            genreIDs: [28, 12, 16],
+            adult: false,
+            video: false
+        )
+    }
+}
