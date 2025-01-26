@@ -4,6 +4,7 @@ import Alamofire
 struct HomeState {
     let popularMovies: [Movie]
     let trendingMovies: [Movie]
+    let nowPlaying: [Movie]
 }
 
 class HomeViewModel: BaseScreenViewModelClosure<[Movie]> {
@@ -16,13 +17,11 @@ class HomeViewModel: BaseScreenViewModelClosure<[Movie]> {
 
 class HomeViewModelAsync: BaseScreenViewModelAsync<HomeState> {
     override func fetch() async throws -> HomeState {
-        async let request1 = TMDBService.shared.getPopularMoviesAsync()
-        async let request2 = TMDBService.shared.getTrendingMoviesAsync()
+        async let popularRequest = TMDBService.shared.getPopularMoviesAsync()
+        async let trendingRequest = TMDBService.shared.getTrendingMoviesAsync()
+        async let notPlayingRequest = TMDBService.shared.getNowPlaying()
 
-        let (popular, trending) = try await (request1, request2)
-        return HomeState(popularMovies: popular.results, trendingMovies: trending.results)
-        
-//        let response = try await TMDBService.shared.getPopularMoviesAsync()
-//        return response.results
+        let (popular, trending, nowPlaying) = try await (popularRequest, trendingRequest, notPlayingRequest)
+        return HomeState(popularMovies: popular.results, trendingMovies: trending.results, nowPlaying: nowPlaying.results)
     }
 }

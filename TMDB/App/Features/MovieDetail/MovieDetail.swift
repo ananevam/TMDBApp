@@ -11,10 +11,11 @@ struct MovieDetail: Decodable {
     let voteAverage: Double
     let voteCount: Int
     let genres: [Genre]
-    let runtime: Int?
+    let runtime: Int
     let budget: Int?
     let revenue: Int?
     let tagline: String?
+    let status: String
     
     struct Genre: Decodable {
         let id: Int
@@ -45,5 +46,26 @@ struct MovieDetail: Decodable {
         case budget
         case revenue
         case tagline
+        case status
+    }
+    
+    var releaseDateAsDate: Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        return dateFormatter.date(from: releaseDate)
+    }
+    var releaseYear: String? {
+        guard let date = releaseDateAsDate else {return nil}
+        let calendar = Calendar.current
+        return String(calendar.component(.year, from: date))
+    }
+    
+    var runtimeFormatted: String? {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour, .minute]
+        formatter.unitsStyle = .abbreviated
+        let dateComponents = DateComponents(minute: runtime)
+        return formatter.string(from: dateComponents)
     }
 }

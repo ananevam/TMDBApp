@@ -12,102 +12,65 @@ struct MovieDetailScreen: View {
             LoadingErrorView(viewModel: viewModel) { (movie: MovieDetail) in
                 ScrollView {
                     VStack(spacing: 16) {
-                        poster(movie)
-                        titleText(movie)
-                        
-                        if !movie.genres.isEmpty {
-                            genres(movie)
-                        }
-                        rating(movie)
-                        buttons()
-
+                        MoviePosterView(movie: movie)
+                        MovieInfoView(movie: movie)
                     }
                 }.navigationTitle(movie.title).navigationBarTitleDisplayMode(.inline)
             }
         }.onLoad(viewModel.fetch)
     }
-    
-    private func poster(_ movie: MovieDetail) -> some View {
+}
+
+private struct MoviePosterView: View {
+    let movie: MovieDetail
+    var body: some View {
         Group {
-            if let posterImageURL = movie.posterImageURL {
-                AsyncImage(url: posterImageURL) { image in
+            if let backdropImageURL = movie.backdropImageURL {
+                AsyncImage(url: backdropImageURL) { image in
                     image.resizable()
-                        .scaledToFit()
-                        .frame(height: 300)
-                        .cornerRadius(12)
+                        .scaledToFill()
+                        .frame(height: 320)
                 } placeholder: {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
-                        .frame(height: 300)
-                }.padding(.top)
+                        .frame(height: 320)
+                }
             }
         }
     }
     
-    private func titleText(_ movie: MovieDetail) -> some View {
-        Group {
-            Text(movie.title)
-                .font(.title)
-                .fontWeight(.bold)
-                .padding([.leading, .trailing])
-            Text(movie.overview)
-                .font(.body)
-                .padding([.leading, .trailing])
-                .lineLimit(nil)
-            Text("Release Date: \(movie.releaseDate)")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-                .padding([.leading, .trailing])
+}
+private struct MovieBlockView<Content: View>: View {
+    let title: String
+    let content: () -> Content
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title).font(.title3)
+            content()
         }
     }
-    
-    private func genres(_ movie: MovieDetail) -> some View {
-        HStack {
-            Text("Genres: ")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-            ForEach(movie.genres, id: \.id) { genre in
-                Text(genre.name)
-                    .font(.subheadline)
-                    .foregroundColor(.blue)
+}
+private struct MovieInfoView: View {
+    let movie: MovieDetail
+    var body: some View {
+        VStack {
+            VStack {
+                Text(movie.title).font(.title)
+                Text([
+                    movie.status,
+                    movie.releaseYear,
+                    movie.runtimeFormatted
+                ].compactMap{$0}.joined(separator: " | "))
+                Text("Rate: \(movie.voteAverage, specifier: "%.1f")")
             }
-        }
-    }
-    
-    private func rating(_ movie: MovieDetail) -> some View {
-        Text("Rating: \(movie.voteAverage, specifier: "%.1f")")
-            .font(.subheadline)
-            .foregroundColor(.gray)
-    }
-    
-    private func buttons() -> some View {
-        
-        HStack {
-            Button(action: {
-                // Action to add to favorites
-            }) {
-                Text("Add to Favorites")
-                    .fontWeight(.semibold)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .cornerRadius(8)
-                    .foregroundColor(.white)
+            MovieBlockView(title: "Synopsis") {
+                Text(movie.overview).font(.body)
             }
-            .padding([.leading, .trailing])
-            
-            Button(action: {
-                // Action to watch the trailer
-            }) {
-                Text("Watch Trailer")
-                    .fontWeight(.semibold)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.green)
-                    .cornerRadius(8)
-                    .foregroundColor(.white)
+            if !movie.genres.isEmpty {
+                MovieBlockView(title: "Genres") {
+                    Text(movie.genres.map{$0.name}.joined(separator: ", "))
+                }
             }
-            .padding([.leading, .trailing])
         }
     }
 }

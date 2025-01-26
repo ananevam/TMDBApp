@@ -32,6 +32,10 @@ class TMDBService {
         try await request("movie/\(id)").serializingDecodable(MovieDetail.self).value
     }
     
+    func getNowPlaying() async throws -> MoviesResponse {
+        try await request("movie/now_playing").serializingDecodable(MoviesResponse.self).value
+    }
+    
     func getTrendingMovies(completion: @escaping (Result<MoviesResponse, Error>) -> Void) {
         request("trending/movie/day").responseDecodable(of: MoviesResponse.self) { response in
             switch response.result {
@@ -44,22 +48,5 @@ class TMDBService {
     }
     func getTrendingMoviesAsync() async throws -> MoviesResponse {
         try await request("trending/movie/day").serializingDecodable(MoviesResponse.self).value
-    }
-    
-    func executeConcurrentRequests<T1>(
-        _ request1: @escaping () async throws -> T1
-    ) async throws -> (T1) {
-        async let result1 = request1()
-
-        return try await (result1)
-    }
-    func executeConcurrentRequests<T1, T2>(
-        _ request1: @escaping () async throws -> T1,
-        _ request2: @escaping () async throws -> T2
-    ) async throws -> (T1, T2) {
-        async let result1 = request1()
-        async let result2 = request2()
-
-        return try await (result1, result2)
     }
 }
