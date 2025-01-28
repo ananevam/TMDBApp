@@ -1,5 +1,10 @@
 import Foundation
 
+struct Genre: Codable, Identifiable {
+    let id: Int
+    let name: String
+}
+
 struct Movie: Codable, Identifiable {
     let id: Int
     let title: String
@@ -40,6 +45,9 @@ struct Movie: Codable, Identifiable {
 }
 struct MoviesResponse: Codable {
     let results: [Movie]
+}
+struct GenresResponse: Codable {
+    let genres: [Genre]
 }
 
 extension Movie {

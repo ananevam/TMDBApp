@@ -30,11 +30,6 @@ struct MovieDetail: Decodable {
         case w500 = "w500"
         case w780 = "w780"
     }
-    
-    struct Genre: Decodable {
-        let id: Int
-        let name: String
-    }
 
     var posterImageURL: URL? {
         guard let posterPath = posterPath else { return nil }

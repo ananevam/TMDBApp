@@ -36,6 +36,10 @@ class TMDBService {
         try await request("movie/now_playing").serializingDecodable(MoviesResponse.self).value
     }
     
+    func getGenres() async throws -> GenresResponse {
+        try await request("genre/movie/list").serializingDecodable(GenresResponse.self).value
+    }
+    
     func getTrendingMovies(completion: @escaping (Result<MoviesResponse, Error>) -> Void) {
         request("trending/movie/day").responseDecodable(of: MoviesResponse.self) { response in
             switch response.result {
