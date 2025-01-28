@@ -19,8 +19,15 @@ struct MovieDetailScreen: View {
                                 MovieInfoView(movie: state.movie)
                             }
                         }
-                        ContentSectionView(title: "Recommendations") {
-                            HMoviesListView(movies: state.recommendations)
+                        if !state.recommendations.isEmpty {
+                            ContentSectionView(title: "Recommendations") {
+                                HMoviesListView(movies: state.recommendations)
+                            }
+                        }
+                        if !state.similar.isEmpty {
+                            ContentSectionView(title: "Similar movies") {
+                                HMoviesListView(movies: state.similar)
+                            }
                         }
                     }.padding(.horizontal, 16)
                     

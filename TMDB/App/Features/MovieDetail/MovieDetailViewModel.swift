@@ -4,6 +4,7 @@ import Alamofire
 struct MovieDetailState {
     let movie: MovieDetail
     let recommendations: [Movie]
+    let similar: [Movie]
 }
 
 class MovieDetailViewModel: BaseScreenViewModel<MovieDetailState> {
@@ -16,11 +17,17 @@ class MovieDetailViewModel: BaseScreenViewModel<MovieDetailState> {
     override func fetch() async throws -> MovieDetailState {
         async let requestMovie = TMDBService.shared.getMovieAsync(self.movieId)
         async let requestRecommendations = TMDBService.shared.getMovieRecommendations(movieId: self.movieId)
-        let (movie, recommendations) = try await (requestMovie, requestRecommendations)
+        async let requestSimilar = TMDBService.shared.getMovieSimilar(movieId: self.movieId)
+        let (movie, recommendations, similar) = try await (
+            requestMovie,
+            requestRecommendations,
+            requestSimilar
+        )
         //return try await (requestMovie, requestRecommendations)
         return MovieDetailState(
             movie: movie,
-            recommendations: recommendations.results
+            recommendations: recommendations.results,
+            similar: similar.results
         )
     }
 }
