@@ -43,6 +43,10 @@ class TMDBService {
         try await request("genre/movie/list").serializingDecodable(GenresResponse.self).value
     }
     
+    func getMovieRecommendations(movieId: Int) async throws -> MoviesResponse {
+        try await request("movie/\(movieId)/recommendations").serializingDecodable(MoviesResponse.self).value
+    }
+    
     func getPopularMoviesByGenreId(_ genreId: Int) async throws -> MoviesResponse {
         let parameters: Parameters = [
             "with_genres": genreId,

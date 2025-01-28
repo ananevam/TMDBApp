@@ -10,15 +10,21 @@ struct MovieDetailScreen: View {
 
     var body: some View {
         Screen {
-            LoadingErrorView(viewModel: viewModel) { (movie: MovieDetail) in
+            LoadingErrorView(viewModel: viewModel) { state in
                 ScrollView {
-                    VStack(spacing: 16) {
-                        MoviePosterView(movie: movie)
-                        VStack {
-                            MovieInfoView(movie: movie)
-                        }.padding(.horizontal, 16)
-                    }
-                }.navigationTitle(movie.title).navigationBarTitleDisplayMode(.inline)
+                    VStack(spacing: 36) {
+                        VStack(spacing: 16) {
+                            MoviePosterView(movie: state.movie)
+                            VStack {
+                                MovieInfoView(movie: state.movie)
+                            }
+                        }
+                        ContentSectionView(title: "Recommendations") {
+                            HMoviesListView(movies: state.recommendations)
+                        }
+                    }.padding(.horizontal, 16)
+                    
+                }.navigationTitle(state.movie.title).navigationBarTitleDisplayMode(.inline)
             }
         }.onLoad(viewModel.load)
     }
