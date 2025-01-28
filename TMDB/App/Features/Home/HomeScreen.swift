@@ -19,9 +19,6 @@ struct HomeScreen: View {
                             ContentSectionView(title: "Popular movies") {
                                 HMoviesListView(movies: state.popularMovies)
                             }
-                            ContentSectionView(title: "Popular movies") {
-                                HMoviesListView(movies: state.popularMovies)
-                            }
                             ContentSectionView(title: "Trending movies") {
                                 HMoviesListView(movies: state.trendingMovies)
                             }
@@ -36,11 +33,12 @@ struct HomeScreen: View {
 
 struct HMoviesListView: View {
     let movies: [Movie]
+    private let width = (UIScreen.main.bounds.width - 16 * 5) / 2
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
                 ForEach(movies) { movie in
-                    MovieCardView(movie: movie)
+                    MovieCardView(movie: movie, width: width)
                 }
             }.fixedSize(horizontal: false, vertical: true)
         }.scrollClipDisabled()

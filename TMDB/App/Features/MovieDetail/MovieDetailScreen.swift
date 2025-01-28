@@ -7,7 +7,7 @@ struct MovieDetailScreen: View {
     init(movieId: Int) {
         _viewModel = StateObject(wrappedValue: MovieDetailViewModel(movieId: movieId))
     }
-    let colors: [Color] = [.red, .green, .blue]
+
     var body: some View {
         Screen {
             LoadingErrorView(viewModel: viewModel) { (movie: MovieDetail) in

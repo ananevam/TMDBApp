@@ -11,6 +11,8 @@ struct ContentView: View {
                     HomeScreen()
                 case .movie(let movieId):
                     MovieDetailScreen(movieId: movieId)
+                case .genre(let genre):
+                    GenreScreen(genre: genre)
                 }
             }
         }

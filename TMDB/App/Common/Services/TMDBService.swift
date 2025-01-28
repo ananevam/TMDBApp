@@ -9,9 +9,12 @@ class TMDBService {
     
     private var cancellables = Set<AnyCancellable>()
     
-    func request(_ url: String) -> DataRequest {
+    func request(_ url: String, parameters requestParameters: Parameters = [:]) -> DataRequest {
         let url = "\(baseURL)/\(url)"
-        let parameters: Parameters = ["api_key": apiKey, "language": "ru-RU"]
+        //var defaultparameters = parameters
+        //parameters["api_key"] = apiKey
+        //parameters["language"] = "ru-RU"
+        let parameters: Parameters = ["api_key": apiKey, "language": "ru-RU"].merging(requestParameters) {$1}
         return AF.request(url, parameters: parameters).validate()
     }
     
@@ -38,6 +41,14 @@ class TMDBService {
     
     func getGenres() async throws -> GenresResponse {
         try await request("genre/movie/list").serializingDecodable(GenresResponse.self).value
+    }
+    
+    func getPopularMoviesByGenreId(_ genreId: Int) async throws -> MoviesResponse {
+        let parameters: Parameters = [
+            "with_genres": genreId,
+            "sort_by": "popularity.desc"
+        ]
+        return try await request("discover/movie", parameters: parameters).serializingDecodable(MoviesResponse.self).value
     }
     
     func getTrendingMovies(completion: @escaping (Result<MoviesResponse, Error>) -> Void) {

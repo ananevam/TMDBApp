@@ -3,7 +3,8 @@ import Kingfisher
 
 struct MovieCardView: View {
     let movie: Movie
-    var width = (UIScreen.main.bounds.width - 16 * 5) / 2
+    //let flexible = false
+    var width: CGFloat? = nil
     var body: some View {
         NavigationLink(value: Screens.movie(movie.id)) {
             VStack(alignment: .center, spacing: 0) {
@@ -36,11 +37,30 @@ struct MovieCardView: View {
     }
 }
 
-#Preview {
+#Preview("Horizontal") {
     HMoviesListView(movies: [
         Movie.example(title: "Title 1"),
         Movie.example(title: "Loooooooong Title 1"),
         Movie.example(title: "Title 1")
     ]).padding(.horizontal, 16)
+    Spacer()
+}
+
+#Preview("Grid") {
+    let movies = [
+        Movie.example(title: "Title 1"),
+        Movie.example(title: "Loooooooong Title 1"),
+        Movie.example(title: "Title 1")
+    ]
+    LazyVGrid(
+        columns: [
+            GridItem(.flexible()),
+            GridItem(.flexible()),
+        ]
+    ) {
+        ForEach(movies) { movie in
+            MovieCardView(movie: movie, width: nil)
+        }
+    }
     Spacer()
 }

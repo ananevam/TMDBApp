@@ -8,14 +8,6 @@ struct HomeState {
     let nowPlaying: [Movie]
 }
 
-class HomeViewModel: BaseScreenViewModelClosure<[Movie]> {
-    func fetch() {
-        execute(request: TMDBService.shared.getPopularMovies) { [weak self] movies in
-            self?.state = .success(movies.results)
-        }
-    }
-}
-
 class HomeViewModelAsync: BaseScreenViewModelAsync<HomeState> {
     override func fetch() async throws -> HomeState {
         async let popularRequest = TMDBService.shared.getPopularMoviesAsync()
