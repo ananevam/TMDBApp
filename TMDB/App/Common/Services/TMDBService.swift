@@ -11,9 +11,6 @@ class TMDBService {
     
     func request(_ url: String, parameters requestParameters: Parameters = [:]) -> DataRequest {
         let url = "\(baseURL)/\(url)"
-        //var defaultparameters = parameters
-        //parameters["api_key"] = apiKey
-        //parameters["language"] = "ru-RU"
         let parameters: Parameters = ["api_key": apiKey, "language": "ru-RU"].merging(requestParameters) {$1}
         return AF.request(url, parameters: parameters).validate()
     }
@@ -49,6 +46,10 @@ class TMDBService {
     
     func getMovieSimilar(movieId: Int) async throws -> MoviesResponse {
         try await request("movie/\(movieId)/similar").serializingDecodable(MoviesResponse.self).value
+    }
+    
+    func getMovieVideos(movieId: Int) async throws -> MovieVideosResponse {
+        try await request("movie/\(movieId)/videos").serializingDecodable(MovieVideosResponse.self).value
     }
     
     func getPopularMoviesByGenreId(_ genreId: Int) async throws -> MoviesResponse {
