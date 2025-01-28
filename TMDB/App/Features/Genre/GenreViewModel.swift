@@ -6,7 +6,7 @@ struct GenreState {
     let movies: [Movie]
 }
 
-class GenreViewModel: BaseScreenViewModelAsync<GenreState> {
+class GenreViewModel: BaseScreenViewModel<GenreState> {
     let genre: Genre
 
     init(genre: Genre) {

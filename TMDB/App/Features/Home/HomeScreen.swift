@@ -2,7 +2,7 @@ import SwiftUI
 import Kingfisher
 
 struct HomeScreen: View {
-    @StateObject var viewModel = HomeViewModelAsync()
+    @StateObject var viewModel = HomeViewModel()
     @EnvironmentObject var theme: ThemeManager
 
     var body: some View {

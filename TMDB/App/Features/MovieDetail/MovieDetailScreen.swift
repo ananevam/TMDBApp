@@ -20,7 +20,7 @@ struct MovieDetailScreen: View {
                     }
                 }.navigationTitle(movie.title).navigationBarTitleDisplayMode(.inline)
             }
-        }.onLoad(viewModel.fetch)
+        }.onLoad(viewModel.load)
     }
 }
 
