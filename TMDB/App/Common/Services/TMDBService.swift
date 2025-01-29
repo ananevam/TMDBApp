@@ -14,13 +14,13 @@ class TMDBService {
         return AF.request(url, parameters: parameters).validate()
     }
 
-    func getPopularMoviesAsync() async throws -> MoviesResponse {
+    func getPopularMoviesAsync() async throws -> ApiResults<Movie> {
         sleep(1)
-        return try await request("movie/popular").serializingDecodable(MoviesResponse.self).value
+        return try await request("movie/popular").serializingDecodable(ApiResults<Movie>.self).value
     }
 
-    func getPopularMovies(completion: @escaping (DataResponse<MoviesResponse, AFError>) -> Void) {
-        request("movie/popular").responseDecodable(of: MoviesResponse.self, completionHandler: completion)
+    func getPopularMovies(completion: @escaping (DataResponse<ApiResults<Movie>, AFError>) -> Void) {
+        request("movie/popular").responseDecodable(of: ApiResults<Movie>.self, completionHandler: completion)
     }
 
     func getMovie(_ id: Int, completion: @escaping (DataResponse<MovieDetail, AFError>) -> Void) {
@@ -31,46 +31,39 @@ class TMDBService {
         try await request("movie/\(id)").serializingDecodable(MovieDetail.self).value
     }
 
-    func getNowPlaying() async throws -> MoviesResponse {
-        try await request("movie/now_playing").serializingDecodable(MoviesResponse.self).value
+    func getNowPlaying() async throws -> ApiResults<Movie> {
+        try await request("movie/now_playing").serializingDecodable(ApiResults<Movie>.self).value
     }
 
     func getGenres() async throws -> GenresResponse {
         try await request("genre/movie/list").serializingDecodable(GenresResponse.self).value
     }
 
-    func getMovieRecommendations(movieId: Int) async throws -> MoviesResponse {
-        try await request("movie/\(movieId)/recommendations").serializingDecodable(MoviesResponse.self).value
+    func getMovieRecommendations(movieId: Int) async throws -> ApiResults<Movie> {
+        try await request("movie/\(movieId)/recommendations").serializingDecodable(ApiResults<Movie>.self).value
     }
 
-    func getMovieSimilar(movieId: Int) async throws -> MoviesResponse {
-        try await request("movie/\(movieId)/similar").serializingDecodable(MoviesResponse.self).value
+    func getMovieSimilar(movieId: Int) async throws -> ApiResults<Movie> {
+        try await request("movie/\(movieId)/similar").serializingDecodable(ApiResults<Movie>.self).value
     }
 
     func getMovieVideos(movieId: Int) async throws -> MovieVideosResponse {
         try await request("movie/\(movieId)/videos").serializingDecodable(MovieVideosResponse.self).value
     }
 
-    func getPopularMoviesByGenreId(_ genreId: Int) async throws -> MoviesResponse {
+    func getPopularMoviesByGenreId(_ genreId: Int) async throws -> ApiResults<Movie> {
         let parameters: Parameters = [
             "with_genres": genreId,
             "sort_by": "popularity.desc"
         ]
         return try await request("discover/movie", parameters: parameters)
-            .serializingDecodable(MoviesResponse.self).value
+            .serializingDecodable(ApiResults<Movie>.self).value
     }
 
-    func getTrendingMovies(completion: @escaping (Result<MoviesResponse, Error>) -> Void) {
-        request("trending/movie/day").responseDecodable(of: MoviesResponse.self) { response in
-            switch response.result {
-            case .success(let result):
-                completion(.success(result))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func getTrendingMovies() async throws -> ApiResults<Movie> {
+        try await request("trending/movie/day").serializingDecodable(ApiResults<Movie>.self).value
     }
-    func getTrendingMoviesAsync() async throws -> MoviesResponse {
-        try await request("trending/movie/day").serializingDecodable(MoviesResponse.self).value
+    func getTrendingTv() async throws -> ApiResults<TVShow> {
+        try await request("trending/tv/day").serializingDecodable(ApiResults<TVShow>.self).value
     }
 }

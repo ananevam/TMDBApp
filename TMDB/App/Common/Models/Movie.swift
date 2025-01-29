@@ -1,9 +1,5 @@
 import Foundation
 
-struct MoviesResponse: Codable {
-    let results: [Movie]
-}
-
 struct Movie: Codable, Identifiable {
     let id: Int
     let title: String

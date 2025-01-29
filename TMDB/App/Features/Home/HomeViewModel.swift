@@ -11,7 +11,7 @@ struct HomeState {
 class HomeViewModel: BaseScreenViewModel<HomeState> {
     override func fetch() async throws -> HomeState {
         async let popularRequest = TMDBService.shared.getPopularMoviesAsync()
-        async let trendingRequest = TMDBService.shared.getTrendingMoviesAsync()
+        async let trendingRequest = TMDBService.shared.getTrendingMovies()
         async let notPlayingRequest = TMDBService.shared.getNowPlaying()
         async let genresRequest = TMDBService.shared.getGenres()
 
