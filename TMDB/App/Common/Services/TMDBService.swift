@@ -10,7 +10,11 @@ class TMDBService {
 
     func request(_ url: String, parameters requestParameters: Parameters = [:]) -> DataRequest {
         let url = "\(baseURL)/\(url)"
-        let parameters: Parameters = ["api_key": apiKey, "language": "ru-RU"].merging(requestParameters) {$1}
+
+        let parameters: Parameters = [
+            "api_key": apiKey,
+            "language": Locale.preferredLanguages.first ?? "en-US"
+        ].merging(requestParameters) {$1}
         return AF.request(url, parameters: parameters).validate()
     }
 
