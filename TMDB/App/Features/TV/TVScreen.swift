@@ -6,7 +6,23 @@ struct TVScreen: View {
     var body: some View {
         Screen {
             LoadingErrorView(viewModel: viewModel) { state in
-                Text(state[0].name)
+                ScrollView {
+                    LazyVGrid(
+                        columns: [
+                            GridItem(.flexible(), spacing: 16),
+                            GridItem(.flexible())
+                        ],
+                        spacing: 16
+                    ) {
+                        ForEach(state) { movie in
+                            MovieCardView(item: movie)
+                        }
+                    }
+                }
+                .navigationTitle("Trending TV Shows")
+                .navigationBarTitleDisplayMode(.inline)
+                .contentMargins(.horizontal, 16)
+
             }
         }.onLoad(viewModel.load)
     }

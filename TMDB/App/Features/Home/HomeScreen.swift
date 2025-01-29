@@ -37,7 +37,7 @@ struct HMoviesListView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
                 ForEach(movies) { movie in
-                    MovieCardView(movie: movie, width: width)
+                    MovieCardView(item: movie, width: width)
                 }
             }.fixedSize(horizontal: false, vertical: true)
         }.scrollClipDisabled()

@@ -1,6 +1,10 @@
 import Foundation
 
-struct TVShow: Codable, Identifiable {
+struct TVShow: Codable, Identifiable, Hashable, MovieCardViewItem {
+    var title: String {
+        name
+    }
+
     let id: Int
     let name: String
     let overview: String
@@ -38,4 +42,6 @@ struct TVShow: Codable, Identifiable {
         guard let backdropPath = backdropPath else { return nil }
         return URL(string: "https://image.tmdb.org/t/p/w500\(backdropPath)")
     }
+
+    func navigationLinkValue() -> Screens { Screens.tvShow(id) }
 }

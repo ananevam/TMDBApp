@@ -20,7 +20,7 @@ struct GenreScreen: View {
                         spacing: 16
                     ) {
                         ForEach(state.movies) { movie in
-                            MovieCardView(movie: movie)
+                            MovieCardView(item: movie)
                         }
                     }
                 }

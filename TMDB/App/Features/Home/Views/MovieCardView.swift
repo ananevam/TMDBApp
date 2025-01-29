@@ -1,14 +1,21 @@
 import SwiftUI
 import Kingfisher
 
+protocol MovieCardViewItem {
+    var id: Int { get }
+    var title: String { get }
+    var posterPath: String? { get }
+    func navigationLinkValue() -> Screens
+}
+
 struct MovieCardView: View {
-    let movie: Movie
+    let item: MovieCardViewItem
 
     var width: CGFloat?
     var body: some View {
-        NavigationLink(value: Screens.movie(movie.id)) {
+        NavigationLink(value: item.navigationLinkValue()) {
             VStack(alignment: .center, spacing: 0) {
-                if let posterPath = movie.posterPath {
+                if let posterPath = item.posterPath {
                     KFImage(URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"))
                         .placeholder {
                             ProgressView()
@@ -20,7 +27,7 @@ struct MovieCardView: View {
                         .layoutPriority(1)
                 }
                 VStack(alignment: .leading) {
-                    Text(movie.title)
+                    Text(item.title)
                         .font(.system(size: 16))
                         .lineLimit(2)
                 }.padding(16)
@@ -59,7 +66,7 @@ struct MovieCardView: View {
         ]
     ) {
         ForEach(movies) { movie in
-            MovieCardView(movie: movie, width: nil)
+            MovieCardView(item: movie, width: nil)
         }
     }
     Spacer()

@@ -28,6 +28,8 @@ private func screenDestination(screen: Screens) -> some View {
             MovieDetailScreen(movieId: movieId)
         case .genre(let genre):
             GenreScreen(genre: genre)
+        case .tvShow(let tvShowId):
+            TVDetailScreen()
         }
     }
 }

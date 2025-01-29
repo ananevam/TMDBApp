@@ -1,6 +1,6 @@
 import Foundation
 
-struct Movie: Codable, Identifiable {
+struct Movie: Codable, Identifiable, MovieCardViewItem {
     let id: Int
     let title: String
     let overview: String
@@ -37,6 +37,8 @@ struct Movie: Codable, Identifiable {
         case adult
         case video
     }
+
+    func navigationLinkValue() -> Screens { Screens.movie(id) }
 }
 
 extension Movie {
