@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		041A41F92D3A8E53003CFA51 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 041A41F82D3A8E4F003CFA51 /* .gitignore */; };
 		043BBE6D2D42A267004336C6 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 043BBE6C2D42A267004336C6 /* Kingfisher */; };
+		0475E0582D4A235A00564C6E /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 0475E0572D4A235900564C6E /* .swiftlint.yml */; };
 		04A7AA022D40CB2400404375 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04A7AA012D40CB2400404375 /* Alamofire */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		041A41F82D3A8E4F003CFA51 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		0475E0572D4A235900564C6E /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		04A1AFD92D364D370088E4C6 /* TMDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A1AFE92D364D390088E4C6 /* TMDBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TMDBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A1AFF32D364D390088E4C6 /* TMDBUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TMDBUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +91,7 @@
 				04A1AFF62D364D390088E4C6 /* TMDBUITests */,
 				04A1AFDA2D364D370088E4C6 /* Products */,
 				041A41F82D3A8E4F003CFA51 /* .gitignore */,
+				0475E0572D4A235900564C6E /* .swiftlint.yml */,
 			);
 			sourceTree = "<group>";
 		};
@@ -116,6 +119,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0475E0562D4A20C800564C6E /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				04A1AFDB2D364D370088E4C6 /* TMDB */,
@@ -202,6 +206,7 @@
 			packageReferences = (
 				04A7AA002D40CB2400404375 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				043BBE6B2D42A267004336C6 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				0475E0542D4A206E00564C6E /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 04A1AFDA2D364D370088E4C6 /* Products */;
@@ -220,6 +225,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0475E0582D4A235A00564C6E /* .swiftlint.yml in Resources */,
 				041A41F92D3A8E53003CFA51 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,6 +271,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0475E0562D4A20C800564C6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 0475E0552D4A20C800564C6E /* SwiftLintBuildToolPlugin */;
+		};
 		04A1AFEB2D364D390088E4C6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 04A1AFD82D364D370088E4C6 /* TMDB */;
@@ -575,6 +585,14 @@
 				minimumVersion = 8.1.3;
 			};
 		};
+		0475E0542D4A206E00564C6E /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.58.2;
+			};
+		};
 		04A7AA002D40CB2400404375 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -590,6 +608,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 043BBE6B2D42A267004336C6 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		0475E0552D4A20C800564C6E /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0475E0542D4A206E00564C6E /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
 		04A7AA012D40CB2400404375 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

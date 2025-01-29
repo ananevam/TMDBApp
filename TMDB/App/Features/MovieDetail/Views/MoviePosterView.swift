@@ -9,10 +9,9 @@ struct MoviePosterView: View {
                 KFImage
                     .url(backdropImageURL)
                     .resizable()
-                    .placeholder{ProgressView()}
+                    .placeholder {ProgressView()}
                     .aspectRatio(CGSize(width: 16, height: 9), contentMode: .fit)
             }
         }
     }
-    
 }

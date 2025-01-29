@@ -27,6 +27,6 @@ struct GenresListView: View {
         Genre(id: 2, name: "Action"),
         Genre(id: 3, name: "animation"),
         Genre(id: 4, name: "Adventure"),
-        Genre(id: 5, name: "Comedy"),
+        Genre(id: 5, name: "Comedy")
     ]).padding(.horizontal, 16)
 }

@@ -35,7 +35,6 @@ struct MovieDetailScreen: View {
                             }
                         }
                     }.padding(.horizontal, 16)
-                    
                 }.navigationTitle(state.movie.title).navigationBarTitleDisplayMode(.inline)
             }
         }.onLoad(viewModel.load)

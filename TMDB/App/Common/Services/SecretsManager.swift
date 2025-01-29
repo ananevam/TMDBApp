@@ -2,7 +2,7 @@ import Foundation
 
 class SecretsManager {
     static let shared = SecretsManager()
-    
+
     private var secrets: [String: Any]?
 
     private init() {
@@ -21,6 +21,7 @@ class SecretsManager {
         guard let secrets = secrets else {
             fatalError("error load \(key) value")
         }
+        // swiftlint:disable:next force_cast
         return secrets[key] as! String
     }
 }

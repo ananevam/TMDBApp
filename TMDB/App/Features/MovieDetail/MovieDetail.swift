@@ -16,19 +16,19 @@ struct MovieDetail: Decodable {
     let revenue: Int?
     let tagline: String?
     let status: String
-    
+
     enum BackdropSizes: String {
-        case w300 = "w300"
-        case w780 = "w780"
-        case w1280 = "w1280"
+        case w300
+        case w780
+        case w1280
     }
     enum PosterSizes: String {
-        case w92 = "w92"
-        case w154 = "w154"
-        case w185 = "w185"
-        case w342 = "w342"
-        case w500 = "w500"
-        case w780 = "w780"
+        case w92
+        case w154
+        case w185
+        case w342
+        case w500
+        case w780
     }
 
     var posterImageURL: URL? {
@@ -65,7 +65,7 @@ struct MovieDetail: Decodable {
         case tagline
         case status
     }
-    
+
     var releaseDateAsDate: Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -77,7 +77,7 @@ struct MovieDetail: Decodable {
         let calendar = Calendar.current
         return String(calendar.component(.year, from: date))
     }
-    
+
     var runtimeFormatted: String? {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.day, .hour, .minute]

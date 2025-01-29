@@ -15,7 +15,7 @@ struct GenreScreen: View {
                     LazyVGrid(
                         columns: [
                             GridItem(.flexible(), spacing: 16),
-                            GridItem(.flexible()),
+                            GridItem(.flexible())
                         ],
                         spacing: 16
                     ) {

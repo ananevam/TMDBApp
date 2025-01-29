@@ -14,4 +14,3 @@ struct ContentSectionView<Content: View>: View {
         }
     }
 }
-

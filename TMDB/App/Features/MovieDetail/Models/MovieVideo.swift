@@ -14,7 +14,7 @@ struct MovieVideo: Codable, Identifiable {
     let type: String
     let official: Bool
     let publishedAt: String
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case iso6391 = "iso_639_1"
@@ -27,7 +27,7 @@ struct MovieVideo: Codable, Identifiable {
         case official
         case publishedAt = "published_at"
     }
-    
+
     var thumbnailURL: URL {
         return URL(string: "https://img.youtube.com/vi/\(key)/0.jpg")!
     }

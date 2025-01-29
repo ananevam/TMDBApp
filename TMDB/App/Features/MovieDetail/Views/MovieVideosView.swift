@@ -18,13 +18,13 @@ struct MovieVideosView: View {
 
 struct MovieVideoView: View {
     let video: MovieVideo
-    var width: CGFloat? = nil
+    var width: CGFloat?
     var body: some View {
         return Link(destination: video.youtubeURL) {
             VStack {
                 KFImage.url(video.thumbnailURL)
                     .resizable()
-                    .placeholder{ProgressView()}
+                    .placeholder { ProgressView() }
                     .aspectRatio(4/3, contentMode: .fill)
                 Text(video.name)
                     .font(.subheadline)

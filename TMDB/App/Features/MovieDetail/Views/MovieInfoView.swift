@@ -10,7 +10,7 @@ struct MovieInfoView: View {
                     movie.status,
                     movie.releaseYear,
                     movie.runtimeFormatted
-                ].compactMap{$0}.joined(separator: " | ")).font(.footnote)
+                ].compactMap {$0}.joined(separator: " | ")).font(.footnote)
                 Text("Rate: \(movie.voteAverage, specifier: "%.1f")").font(.footnote)
             }
             MovieBlockView(title: "Synopsis") {
@@ -18,7 +18,7 @@ struct MovieInfoView: View {
             }
             if !movie.genres.isEmpty {
                 MovieBlockView(title: "Genres") {
-                    Text(movie.genres.map{$0.name}.joined(separator: ", "))
+                    Text(movie.genres.map {$0.name}.joined(separator: ", "))
                 }
             }
         }.frame(maxWidth: .infinity)

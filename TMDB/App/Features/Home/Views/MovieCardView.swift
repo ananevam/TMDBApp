@@ -3,8 +3,8 @@ import Kingfisher
 
 struct MovieCardView: View {
     let movie: Movie
-    //let flexible = false
-    var width: CGFloat? = nil
+
+    var width: CGFloat?
     var body: some View {
         NavigationLink(value: Screens.movie(movie.id)) {
             VStack(alignment: .center, spacing: 0) {
@@ -50,7 +50,7 @@ struct MovieCardView: View {
     let movies = [
         Movie.example(title: "Title 1"),
         Movie.example(title: "Loooooooong Title 1"),
-        Movie.example(title: "Title 1")
+        Movie.example(title: "Title 1"),
     ]
     LazyVGrid(
         columns: [

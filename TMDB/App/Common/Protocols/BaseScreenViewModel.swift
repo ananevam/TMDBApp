@@ -9,7 +9,7 @@ class BaseScreenViewModel<Data>: ObservableObject {
         case success(Data)
         case failure(String)
     }
-    
+
     @MainActor
     func load() async {
         state = .loading

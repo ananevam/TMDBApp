@@ -22,10 +22,13 @@ private struct CarouselItemView: View {
                 KFImage
                     .url(backdropImageURL)
                     .resizable()
-                    .placeholder{ProgressView()}
+                    .placeholder {ProgressView()}
                     .aspectRatio(CGSize(width: 16, height: 9), contentMode: .fit)
                     .frame(width: UIScreen.main.bounds.width)
-                    .overlay(Text(movie.title).font(.system(size: 24, weight: .bold)).padding(16), alignment: .bottomLeading)
+                    .overlay(
+                        Text(movie.title).font(.system(size: 24, weight: .bold)).padding(16),
+                        alignment: .bottomLeading
+                    )
             }.foregroundColor(.white)
         }
     }

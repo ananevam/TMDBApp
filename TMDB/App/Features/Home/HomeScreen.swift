@@ -23,9 +23,8 @@ struct HomeScreen: View {
                                 HMoviesListView(movies: state.trendingMovies)
                             }
                         }.padding(.horizontal, 16)
-                        
                     }
-                }//.contentMargins(.horizontal, 16)
+                }// .contentMargins(.horizontal, 16)
             }.navigationTitle("Movies")
         }.onLoad(viewModel.load)
     }

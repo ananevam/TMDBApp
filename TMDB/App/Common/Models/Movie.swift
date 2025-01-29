@@ -19,7 +19,7 @@ struct Movie: Codable, Identifiable {
     let genreIDs: [Int]
     let adult: Bool
     let video: Bool
-    
+
     var backdropImageURL: URL? {
         guard let backdropPath = backdropPath else { return nil }
         return URL(string: "https://image.tmdb.org/t/p/w500\(backdropPath)")
