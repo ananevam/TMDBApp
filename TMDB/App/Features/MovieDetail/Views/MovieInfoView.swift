@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MovieInfoView: View {
-    let movie: MovieDetail
+    let movie: Detailable
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             VStack(alignment: .leading) {
@@ -13,8 +13,10 @@ struct MovieInfoView: View {
                 ].compactMap {$0}.joined(separator: " | ")).font(.footnote)
                 Text("Rate: \(movie.voteAverage, specifier: "%.1f")").font(.footnote)
             }
-            MovieBlockView(title: "Synopsis") {
-                Text(movie.overview).font(.body)
+            if let overview = movie.overview {
+                MovieBlockView(title: "Synopsis") {
+                    Text(overview).font(.body)
+                }
             }
             if !movie.genres.isEmpty {
                 MovieBlockView(title: "Genres") {

@@ -21,9 +21,10 @@ struct ContentView: View {
                 appearance.backgroundColor = UIColor(resource: .background)
 
                 let backItemAppearance = UIBarButtonItemAppearance()
-                backItemAppearance.normal.titleTextAttributes = [.foregroundColor : UIColor.white] // fix text color
+                backItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white] // fix text color
                 appearance.backButtonAppearance = backItemAppearance
-                let image = UIImage(systemName: "chevron.backward")?.withTintColor(.white, renderingMode: .alwaysOriginal) // fix indicator color
+                let image = UIImage(systemName: "chevron.backward")?
+                    .withTintColor(.white, renderingMode: .alwaysOriginal) // fix indicator color
                 appearance.setBackIndicatorImage(image, transitionMaskImage: image)
 
                 UINavigationBar.appearance().standardAppearance = appearance
@@ -46,7 +47,7 @@ private func screenDestination(screen: Screens) -> some View {
         case .genre(let genre):
             GenreScreen(genre: genre)
         case .tvShow(let tvShowId):
-            TVDetailScreen()
+            TVDetailScreen(tvShowId: tvShowId)
         }
     }
 }

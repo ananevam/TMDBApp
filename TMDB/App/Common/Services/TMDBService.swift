@@ -18,7 +18,7 @@ class TMDBService {
         return AF.request(url, parameters: parameters).validate()
     }
 
-    func getPopularMoviesAsync() async throws -> ApiResults<Movie> {
+    func getPopularMovies() async throws -> ApiResults<Movie> {
         sleep(1)
         return try await request("movie/popular").serializingDecodable(ApiResults<Movie>.self).value
     }
@@ -27,12 +27,12 @@ class TMDBService {
         request("movie/popular").responseDecodable(of: ApiResults<Movie>.self, completionHandler: completion)
     }
 
-    func getMovie(_ id: Int, completion: @escaping (DataResponse<MovieDetail, AFError>) -> Void) {
-        request("movie/\(id)").responseDecodable(of: MovieDetail.self, completionHandler: completion)
+    func getMovie(_ id: Int) async throws -> MovieDetail {
+        try await request("movie/\(id)").serializingDecodable(MovieDetail.self).value
     }
 
-    func getMovieAsync(_ id: Int) async throws -> MovieDetail {
-        try await request("movie/\(id)").serializingDecodable(MovieDetail.self).value
+    func getTVShow(_ id: Int) async throws -> TVShowDetail {
+        try await request("tv/\(id)").serializingDecodable(TVShowDetail.self).value
     }
 
     func getNowPlaying() async throws -> ApiResults<Movie> {

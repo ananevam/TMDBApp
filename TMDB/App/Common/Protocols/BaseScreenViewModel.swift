@@ -17,6 +17,7 @@ class BaseScreenViewModel<Data>: ObservableObject {
             let result = try await fetch()
             self.state = .success(result)
         } catch let error {
+            print(error)
             self.state = .failure(error.localizedDescription)
         }
     }

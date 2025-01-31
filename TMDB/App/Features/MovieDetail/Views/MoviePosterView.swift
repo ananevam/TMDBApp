@@ -2,7 +2,7 @@ import SwiftUI
 import Kingfisher
 
 struct MoviePosterView: View {
-    let movie: MovieDetail
+    let movie: Detailable
     var body: some View {
         Group {
             if let backdropImageURL = movie.backdropImageURL(.w1280) {

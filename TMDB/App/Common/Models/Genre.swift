@@ -1,8 +1,8 @@
-struct GenresResponse: Codable {
+struct GenresResponse: Decodable {
     let genres: [Genre]
 }
 
-struct Genre: Codable, Identifiable, Hashable {
+struct Genre: Decodable, Identifiable, Hashable {
     let id: Int
     let name: String
 }

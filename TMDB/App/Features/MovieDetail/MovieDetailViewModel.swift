@@ -16,7 +16,7 @@ class MovieDetailViewModel: BaseScreenViewModel<MovieDetailState> {
     }
 
     override func fetch() async throws -> MovieDetailState {
-        async let requestMovie = TMDBService.shared.getMovieAsync(self.movieId)
+        async let requestMovie = TMDBService.shared.getMovie(self.movieId)
         async let requestRecommendations = TMDBService.shared.getMovieRecommendations(movieId: self.movieId)
         async let requestSimilar = TMDBService.shared.getMovieSimilar(movieId: self.movieId)
         async let requestVideos = TMDBService.shared.getMovieVideos(movieId: self.movieId)
