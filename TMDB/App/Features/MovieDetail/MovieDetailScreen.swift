@@ -16,14 +16,19 @@ struct MovieDetailScreen: View {
                         MoviePosterView(movie: state.movie)
                         VStack(spacing: 36) {
                             MovieInfoView(movie: state.movie)
+                            if !state.credits.cast.isEmpty {
+                                ContentSectionView(title: "Cast") {
+                                    HListCastView(items: state.credits.cast)
+                                }
+                            }
                             if !state.recommendations.isEmpty {
                                 ContentSectionView(title: "Recommendations") {
-                                    HMoviesListView(movies: state.recommendations)
+                                    HListMoviesView(movies: state.recommendations)
                                 }
                             }
                             if !state.similar.isEmpty {
                                 ContentSectionView(title: "Similar movies") {
-                                    HMoviesListView(movies: state.similar)
+                                    HListMoviesView(movies: state.similar)
                                 }
                             }
                             if !state.videos.isEmpty {

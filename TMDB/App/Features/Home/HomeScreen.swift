@@ -17,29 +17,15 @@ struct HomeScreen: View {
                                 GenresListView(genres: state.genres)
                             }
                             ContentSectionView(title: "Popular movies") {
-                                HMoviesListView(movies: state.popularMovies)
+                                HListMoviesView(movies: state.popularMovies)
                             }
                             ContentSectionView(title: "Trending movies") {
-                                HMoviesListView(movies: state.trendingMovies)
+                                HListMoviesView(movies: state.trendingMovies)
                             }
                         }.padding(.horizontal, 16)
                     }
                 }// .contentMargins(.horizontal, 16)
             }.navigationTitle("Movies")
         }.onLoad(viewModel.load)
-    }
-}
-
-struct HMoviesListView: View {
-    let movies: [Movie]
-    private let width = (UIScreen.main.bounds.width - 16 * 5) / 2
-    var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 16) {
-                ForEach(movies) { movie in
-                    MovieCardView(item: movie, width: width)
-                }
-            }.fixedSize(horizontal: false, vertical: true)
-        }.scrollClipDisabled()
     }
 }

@@ -30,12 +30,16 @@ class TMDBService {
     func getMovie(_ id: Int) async throws -> MovieDetail {
         try await request("movie/\(id)").serializingDecodable(MovieDetail.self).value
     }
-    func getMovieCredits(_ id: Int) async throws -> MovieDetail {
-        try await request("movie/\(id)/credits").serializingDecodable(MovieDetail.self).value
+    func getMovieCredits(_ id: Int) async throws -> CreditsResponse {
+        try await request("movie/\(id)/credits").serializingDecodable(CreditsResponse.self).value
     }
 
     func getTVShow(_ id: Int) async throws -> TVShowDetail {
         try await request("tv/\(id)").serializingDecodable(TVShowDetail.self).value
+    }
+
+    func getTVShowCredits(_ id: Int) async throws -> CreditsResponse {
+        try await request("tv/\(id)/credits").serializingDecodable(CreditsResponse.self).value
     }
 
     func getNowPlaying() async throws -> ApiResults<Movie> {
@@ -46,15 +50,15 @@ class TMDBService {
         try await request("genre/movie/list").serializingDecodable(GenresResponse.self).value
     }
 
-    func getMovieRecommendations(movieId: Int) async throws -> ApiResults<Movie> {
+    func getMovieRecommendations(_ movieId: Int) async throws -> ApiResults<Movie> {
         try await request("movie/\(movieId)/recommendations").serializingDecodable(ApiResults<Movie>.self).value
     }
 
-    func getMovieSimilar(movieId: Int) async throws -> ApiResults<Movie> {
+    func getMovieSimilar(_ movieId: Int) async throws -> ApiResults<Movie> {
         try await request("movie/\(movieId)/similar").serializingDecodable(ApiResults<Movie>.self).value
     }
 
-    func getMovieVideos(movieId: Int) async throws -> MovieVideosResponse {
+    func getMovieVideos(_ movieId: Int) async throws -> MovieVideosResponse {
         try await request("movie/\(movieId)/videos").serializingDecodable(MovieVideosResponse.self).value
     }
 

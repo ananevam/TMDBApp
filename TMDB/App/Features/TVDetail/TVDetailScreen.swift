@@ -16,6 +16,11 @@ struct TVDetailScreen: View {
                         MoviePosterView(movie: state.show)
                         VStack(spacing: 36) {
                             MovieInfoView(movie: state.show)
+                            if !state.credits.cast.isEmpty {
+                                ContentSectionView(title: "Cast") {
+                                    HListCastView(items: state.credits.cast)
+                                }
+                            }
                         }.padding(.horizontal, 16)
                     }
                 }.navigationTitle(state.show.title).navigationBarTitleDisplayMode(.inline)

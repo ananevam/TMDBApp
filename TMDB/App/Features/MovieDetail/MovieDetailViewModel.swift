@@ -6,6 +6,7 @@ struct MovieDetailState {
     let recommendations: [Movie]
     let similar: [Movie]
     let videos: [MovieVideo]
+    let credits: CreditsResponse
 }
 
 class MovieDetailViewModel: BaseScreenViewModel<MovieDetailState> {
@@ -17,21 +18,24 @@ class MovieDetailViewModel: BaseScreenViewModel<MovieDetailState> {
 
     override func fetch() async throws -> MovieDetailState {
         async let requestMovie = TMDBService.shared.getMovie(self.movieId)
-        async let requestRecommendations = TMDBService.shared.getMovieRecommendations(movieId: self.movieId)
-        async let requestSimilar = TMDBService.shared.getMovieSimilar(movieId: self.movieId)
-        async let requestVideos = TMDBService.shared.getMovieVideos(movieId: self.movieId)
-        let (movie, recommendations, similar, videos) = try await (
+        async let requestRecommendations = TMDBService.shared.getMovieRecommendations(self.movieId)
+        async let requestSimilar = TMDBService.shared.getMovieSimilar(self.movieId)
+        async let requestVideos = TMDBService.shared.getMovieVideos(self.movieId)
+        async let requestCredits = TMDBService.shared.getMovieCredits(self.movieId)
+        let (movie, recommendations, similar, videos, credits) = try await (
             requestMovie,
             requestRecommendations,
             requestSimilar,
-            requestVideos
+            requestVideos,
+            requestCredits
         )
         // return try await (requestMovie, requestRecommendations)
         return MovieDetailState(
             movie: movie,
             recommendations: recommendations.results,
             similar: similar.results,
-            videos: videos.results
+            videos: videos.results,
+            credits: credits
         )
     }
 }

@@ -45,7 +45,7 @@ struct MovieCardView: View {
 }
 
 #Preview("Horizontal") {
-    HMoviesListView(movies: [
+    HListMoviesView(movies: [
         Movie.example(title: "Title 1"),
         Movie.example(title: "Loooooooong Title 1"),
         Movie.example(title: "Title 1")
