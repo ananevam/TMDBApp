@@ -28,7 +28,7 @@ struct MovieCardView: View {
                 }
                 VStack(alignment: .leading) {
                     Text(item.title)
-                        .font(.system(size: 16))
+                        .textStyle(.cardTitle)
                         .lineLimit(2)
                 }.padding(16)
             }.frame(

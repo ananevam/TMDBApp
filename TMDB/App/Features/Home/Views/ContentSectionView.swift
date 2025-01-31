@@ -9,7 +9,7 @@ struct ContentSectionView<Content: View>: View {
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(title).font(.system(size: 22, weight: .bold))
+            Text(title).textStyle(.sectionTitle)
             content()
         }
     }

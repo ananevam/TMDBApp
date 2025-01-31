@@ -26,7 +26,7 @@ private struct CarouselItemView: View {
                     .aspectRatio(CGSize(width: 16, height: 9), contentMode: .fit)
                     .frame(width: UIScreen.main.bounds.width)
                     .overlay(
-                        Text(movie.title).font(.system(size: 24, weight: .bold)).padding(16),
+                        Text(movie.title).textStyle(.carouselTitle).padding(16),
                         alignment: .bottomLeading
                     )
             }.foregroundColor(.white)
