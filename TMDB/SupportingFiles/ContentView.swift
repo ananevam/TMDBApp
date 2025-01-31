@@ -19,6 +19,13 @@ struct ContentView: View {
                 let appearance = UINavigationBarAppearance()
                 appearance.shadowColor = .clear
                 appearance.backgroundColor = UIColor(resource: .background)
+
+                let backItemAppearance = UIBarButtonItemAppearance()
+                backItemAppearance.normal.titleTextAttributes = [.foregroundColor : UIColor.white] // fix text color
+                appearance.backButtonAppearance = backItemAppearance
+                let image = UIImage(systemName: "chevron.backward")?.withTintColor(.white, renderingMode: .alwaysOriginal) // fix indicator color
+                appearance.setBackIndicatorImage(image, transitionMaskImage: image)
+
                 UINavigationBar.appearance().standardAppearance = appearance
                 UINavigationBar.appearance().scrollEdgeAppearance = appearance
                 UINavigationBar.appearance().compactAppearance = appearance
