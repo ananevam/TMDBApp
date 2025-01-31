@@ -6,8 +6,6 @@ class TVScreenViewModel: BaseScreenViewModel<[TVShow]> {
         async let request = TMDBService.shared.getTrendingTv()
 
         let response = try await request
-        print("FOO")
-        print(response)
         return response.results
     }
 }
