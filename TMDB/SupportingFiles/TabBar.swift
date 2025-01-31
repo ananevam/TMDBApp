@@ -7,7 +7,7 @@ enum TabBarTab {
 
 struct TabBarItem: Identifiable {
     var id: TabBarTab { tab }
-    let title: String
+    let title: LocalizedStringKey
     let tab: TabBarTab
     let systemImage: String
 }
