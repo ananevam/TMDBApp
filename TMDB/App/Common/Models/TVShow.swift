@@ -1,6 +1,6 @@
 import Foundation
 
-struct TVShow: Codable, Identifiable, Hashable, MovieCardViewItem {
+struct TVShow: Decodable, Identifiable, Hashable, MovieCardViewItem {
     var title: String {
         name
     }

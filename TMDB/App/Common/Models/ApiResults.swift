@@ -1,3 +1,3 @@
-struct ApiResults<T: Codable>: Codable {
+struct ApiResults<T: Decodable>: Decodable {
     let results: [T]
 }

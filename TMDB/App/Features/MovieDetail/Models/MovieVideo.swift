@@ -1,9 +1,9 @@
 import Foundation
 
-struct MovieVideosResponse: Codable {
+struct MovieVideosResponse: Decodable {
     let results: [MovieVideo]
 }
-struct MovieVideo: Codable, Identifiable {
+struct MovieVideo: Decodable, Identifiable {
     let id: String
     let iso6391: String
     let iso31661: String
