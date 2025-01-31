@@ -46,7 +46,7 @@ private struct TabBarButton: View {
         Button(action: action) {
             VStack(spacing: 8) {
                 Image(systemName: item.systemImage)
-                Text(item.title)
+                Text(item.title).textStyle(.cardTitle)
             }
         }
         .foregroundColor(Color(active ? .activeTab : .inactiveTab))

@@ -3,13 +3,14 @@ import Foundation
 struct Actor: Decodable, Identifiable {
     let id: Int
     let name: String
-    let character: String
+    // let character: String
     let profilePath: String?
+    let biography: String?
     let gender: Int?
     let order: Int?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, character, gender, order
+        case id, name, gender, order, biography
         case profilePath = "profile_path"
     }
 

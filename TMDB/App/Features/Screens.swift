@@ -3,4 +3,5 @@ enum Screens: Hashable {
     case movie(Int)
     case genre(Genre)
     case tvShow(Int)
+    case actor(Int)
 }

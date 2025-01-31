@@ -42,6 +42,10 @@ class TMDBService {
         try await request("tv/\(id)/credits").serializingDecodable(CreditsResponse.self).value
     }
 
+    func getPerson(_ id: Int) async throws -> Actor {
+        try await request("person/\(id)").serializingDecodable(Actor.self).value
+    }
+
     func getNowPlaying() async throws -> ApiResults<Movie> {
         try await request("movie/now_playing").serializingDecodable(ApiResults<Movie>.self).value
     }
