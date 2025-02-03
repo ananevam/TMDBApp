@@ -29,14 +29,14 @@ struct LoginScreen: View {
                     viewModel.login {
                         userViewModel.checkSession()
                     }
-                }) {
+                }, label: {
                     Text("Войти")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(8)
-                }
+                })
                 .padding(.horizontal)
                 .disabled(viewModel.username.isEmpty || viewModel.password.isEmpty)
             }
