@@ -14,6 +14,9 @@ struct ContentView: View {
                     NavigationStack {
                         TVScreen().navigationDestination(for: Screens.self, destination: screenDestination)
                     }.tag(TabBarTab.tv)
+                    NavigationStack {
+                        ProfileTabScreen().navigationDestination(for: Screens.self, destination: screenDestination)
+                    }.tag(TabBarTab.profile)
                 }.toolbar(.hidden, for: .tabBar)
             }.onAppear {
                 let appearance = UINavigationBarAppearance()

@@ -5,17 +5,23 @@ import Foundation
 class TMDBService {
     static let shared = TMDBService()
     private let apiKey = SecretsManager.shared.getValue(forKey: "API_KEY")
+    private let accessToken = SecretsManager.shared.getValue(forKey: "ACCESS_TOKEN")
     private let baseURL = "https://api.themoviedb.org/3"
     private var cancellables = Set<AnyCancellable>()
 
-    func request(_ url: String, parameters requestParameters: Parameters = [:]) -> DataRequest {
+    func request(_ url: String, method: HTTPMethod = .get, parameters: Parameters = [:]) -> DataRequest {
         let url = "\(baseURL)/\(url)"
 
-        let parameters: Parameters = [
-            "api_key": apiKey,
-            "language": Locale.preferredLanguages.first ?? "en-US"
-        ].merging(requestParameters) {$1}
-        return AF.request(url, parameters: parameters).validate()
+//        let parameters: Parameters = [
+//            "api_key": apiKey,
+//            "language": Locale.preferredLanguages.first ?? "en-US"
+//        ].merging(requestParameters) {$1}
+
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(accessToken)",
+        ]
+
+        return AF.request(url, method: method, parameters: parameters, headers: headers).validate()
     }
 
     func getPopularMovies() async throws -> ApiResults<Movie> {
@@ -48,6 +54,10 @@ class TMDBService {
 
     func getNowPlaying() async throws -> ApiResults<Movie> {
         try await request("movie/now_playing").serializingDecodable(ApiResults<Movie>.self).value
+    }
+
+    func getAccount() async throws -> AccountResponse {
+        try await request("account").serializingDecodable(AccountResponse.self).value
     }
 
     func getGenres() async throws -> GenresResponse {

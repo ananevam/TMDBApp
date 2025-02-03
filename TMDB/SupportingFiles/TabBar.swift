@@ -3,6 +3,7 @@ import SwiftUI
 enum TabBarTab {
     case home
     case tv
+    case profile
 }
 
 struct TabBarItem: Identifiable {
@@ -17,7 +18,8 @@ struct TabBar: View {
 
     private let items = [
         TabBarItem(title: "Home", tab: .home, systemImage: "house.fill"),
-        TabBarItem(title: "TV", tab: .tv, systemImage: "tv.fill")
+        TabBarItem(title: "TV", tab: .tv, systemImage: "tv.fill"),
+        TabBarItem(title: "Profile", tab: .profile, systemImage: "person.crop.circle.fill")
     ]
 
     var body: some View {
