@@ -7,17 +7,17 @@ struct LoginScreen: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Text("Вход в TMDB")
+            Text("Login TMDB")
                 .font(.title)
                 .bold()
                 .padding(.bottom, 16)
 
-            TextField("Логин", text: $viewModel.username)
+            TextField("Username", text: $viewModel.username)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(.none)
                 .padding(.horizontal)
 
-            TextField("Пароль", text: $viewModel.password)
+            TextField("Password", text: $viewModel.password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(.none)
                 .padding(.horizontal)
@@ -30,7 +30,7 @@ struct LoginScreen: View {
                         userViewModel.checkSession()
                     }
                 }, label: {
-                    Text("Войти")
+                    Text("Login")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.blue)
@@ -38,7 +38,8 @@ struct LoginScreen: View {
                         .cornerRadius(8)
                 })
                 .padding(.horizontal)
-                .disabled(viewModel.username.isEmpty || viewModel.password.isEmpty)
+                .opacity(viewModel.isDisabled ? 0.5 : 1)
+                .disabled(viewModel.isDisabled)
             }
 
             if let errorMessage = viewModel.errorMessage {

@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 class LoginScreenViewModel: ObservableObject {
     @Published var username: String = ""
@@ -6,11 +7,25 @@ class LoginScreenViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 
+    @Published var isDisabled: Bool = true
+
+    private var cancellables = Set<AnyCancellable>()
+
+    init() {
+        Publishers.CombineLatest($username, $password)
+            .map { $0.trimmed.isEmpty || $1.trimmed.isEmpty }
+            .assign(to: \.isDisabled, on: self)
+            .store(in: &cancellables)
+    }
+
     func login(onSuccess: @escaping () -> Void) {
         isLoading = true
         errorMessage = nil
 
-        Task {
+        Task { @MainActor in
+            defer {
+                isLoading = false
+            }
             do {
                 let tokenResponse = try await TMDBService.shared.getNewToken()
                 let validateLoginResponse = try await TMDBService.shared.validateLogin(
