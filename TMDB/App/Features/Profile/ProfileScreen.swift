@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct ProfileScreen: View {
-    @ObservedObject var authViewModel: AuthViewModel
 
+    @EnvironmentObject var userViewModel: UserViewModel
     var body: some View {
         VStack {
-            if let user = authViewModel.user {
+            if let user = userViewModel.user {
                 Text("Привет, \(user.username)")
                     .font(.title)
 
@@ -21,7 +21,7 @@ struct ProfileScreen: View {
                 }
 
                 Button("Выйти") {
-                    authViewModel.logout()
+                    userViewModel.logout()
                 }
                 .padding()
             } else {

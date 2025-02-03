@@ -1,18 +1,17 @@
 import SwiftUI
 
 struct ProfileTabScreen: View {
-    @StateObject var authViewModel = AuthViewModel()
-
+    @EnvironmentObject var userViewModel: UserViewModel
     var body: some View {
         Group {
-            if authViewModel.isAuthenticated {
-                ProfileScreen(authViewModel: authViewModel)
+            if userViewModel.isAuthenticated {
+                ProfileScreen()
             } else {
-                LoginScreen(authViewModel: authViewModel)
+                LoginScreen()
             }
         }
         .onAppear {
-            authViewModel.checkSession()
+            userViewModel.checkSession()
         }
     }
 }

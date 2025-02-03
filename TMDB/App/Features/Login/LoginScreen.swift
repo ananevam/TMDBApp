@@ -2,7 +2,8 @@ import SwiftUI
 import Alamofire
 
 struct LoginScreen: View {
-    @ObservedObject var authViewModel: AuthViewModel
+    @StateObject var viewModel = LoginScreenViewModel()
+    @EnvironmentObject var userViewModel: UserViewModel
 
     var body: some View {
         VStack(spacing: 16) {
@@ -11,21 +12,23 @@ struct LoginScreen: View {
                 .bold()
                 .padding(.bottom, 16)
 
-            TextField("Логин", text: $authViewModel.username)
+            TextField("Логин", text: $viewModel.username)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(.none)
                 .padding(.horizontal)
 
-            TextField("Пароль", text: $authViewModel.password)
+            TextField("Пароль", text: $viewModel.password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(.none)
                 .padding(.horizontal)
 
-            if authViewModel.isLoading {
+            if viewModel.isLoading {
                 ProgressView()
             } else {
                 Button(action: {
-                    authViewModel.login()
+                    viewModel.login {
+                        userViewModel.checkSession()
+                    }
                 }) {
                     Text("Войти")
                         .frame(maxWidth: .infinity)
@@ -35,10 +38,10 @@ struct LoginScreen: View {
                         .cornerRadius(8)
                 }
                 .padding(.horizontal)
-                .disabled(authViewModel.username.isEmpty || authViewModel.password.isEmpty)
+                .disabled(viewModel.username.isEmpty || viewModel.password.isEmpty)
             }
 
-            if let errorMessage = authViewModel.errorMessage {
+            if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
                     .padding(.top, 8)
@@ -47,16 +50,5 @@ struct LoginScreen: View {
             Spacer()
         }
         .padding()
-    }
-}
-struct RequestTokenResponse: Decodable {
-    let success: Bool
-    let requestToken: String
-    let expiresAt: String
-
-    enum CodingKeys: String, CodingKey {
-        case success
-        case requestToken = "request_token"
-        case expiresAt = "expires_at"
     }
 }

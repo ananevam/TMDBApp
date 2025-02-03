@@ -56,8 +56,11 @@ class TMDBService {
         try await request("movie/now_playing").serializingDecodable(ApiResults<Movie>.self).value
     }
 
-    func getAccount() async throws -> AccountResponse {
-        try await request("account").serializingDecodable(AccountResponse.self).value
+    func getAccount(sessionId: String) async throws -> AccountResponse {
+        let parameters: [String: Any] = [
+            "session_id": sessionId
+        ]
+        return try await request("account", parameters: parameters).serializingDecodable(AccountResponse.self).value
     }
 
     func getGenres() async throws -> GenresResponse {
@@ -90,5 +93,33 @@ class TMDBService {
     }
     func getTrendingTv() async throws -> ApiResults<TVShow> {
         try await request("trending/tv/day").serializingDecodable(ApiResults<TVShow>.self).value
+    }
+
+    func getNewToken() async throws -> TokenResponse {
+        try await request("authentication/token/new").serializingDecodable(TokenResponse.self).value
+    }
+
+    func validateLogin(username: String, password: String, requestToken: String) async throws -> TokenResponse {
+        let parameters: [String: Any] = [
+            "username": username,
+            "password": password,
+            "request_token": requestToken
+        ]
+
+        return try await request(
+            "authentication/token/validate_with_login",
+            method: .post,
+            parameters: parameters
+        ).serializingDecodable(TokenResponse.self).value
+    }
+
+    func createSession(requestToken: String) async throws -> SessionResponse {
+        let parameters: [String: Any] = [
+            "request_token": requestToken
+        ]
+
+        return try await request(
+            "authentication/session/new", method: .post, parameters: parameters
+        ).serializingDecodable(SessionResponse.self).value
     }
 }
