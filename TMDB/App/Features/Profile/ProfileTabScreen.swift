@@ -10,8 +10,5 @@ struct ProfileTabScreen: View {
                 LoginScreen()
             }
         }
-        .onAppear {
-            userViewModel.checkSession()
-        }
     }
 }

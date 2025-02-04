@@ -4,33 +4,44 @@ import SwiftUI
 class UserViewModel: ObservableObject {
     @Published var isAuthenticated = false
     @Published var user: AccountResponse?
+    let sessionStoreKey = "sessionId"
 
-    @MainActor
-    func checkSession() {
-        print("CHECK SESSIONB")
-        if let sessionId = KeychainManager.shared.getString(key: "sessionId") {
-            print("SESSION_ID = \(sessionId)")
+    var sessionId: String? {
+        didSet {
+            sessionIdDidSet()
+        }
+    }
+    init() {
+        sessionId = KeychainManager.shared.getString(key: sessionStoreKey)
+        sessionIdDidSet()
+    }
+    private func sessionIdDidSet() {
+        isAuthenticated = sessionId != nil
+        if let sessionId = sessionId {
+            KeychainManager.shared.save(key: sessionStoreKey, string: sessionId)
             Task {
                 await fetchUserProfile(sessionId: sessionId)
             }
         } else {
-            isAuthenticated = false
+            user = nil
+            KeychainManager.shared.delete(key: sessionStoreKey)
         }
     }
+
     @MainActor
     func fetchUserProfile(sessionId: String) async {
         do {
             let account = try await TMDBService.shared.getAccount(sessionId: sessionId)
             self.user = account
-            self.isAuthenticated = true
         } catch {
-            self.user = nil
-            self.isAuthenticated = false
+            // self.user = nil
+            // self.isAuthenticated = false
         }
     }
+    func onSuccessLogin(_ sessionId: String) {
+        self.sessionId = sessionId
+    }
     func logout() {
-        KeychainManager.shared.delete(key: "sessionId")
-        self.user = nil
-        self.isAuthenticated = false
+        sessionId = nil
     }
 }

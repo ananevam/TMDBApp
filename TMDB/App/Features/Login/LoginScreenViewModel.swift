@@ -10,6 +10,7 @@ class LoginScreenViewModel: ObservableObject {
     @Published var isDisabled: Bool = true
 
     private var cancellables = Set<AnyCancellable>()
+    var onSuccess: ((String) -> Void)?
 
     init() {
         Publishers.CombineLatest($username, $password)
@@ -18,7 +19,7 @@ class LoginScreenViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func login(onSuccess: @escaping () -> Void) {
+    func login(onSuccess: @escaping (String) -> Void) {
         isLoading = true
         errorMessage = nil
 
@@ -35,9 +36,10 @@ class LoginScreenViewModel: ObservableObject {
                     requestToken: validateLoginResponse.requestToken
                 )
 
-                KeychainManager.shared.save(key: "sessionId", string: sessionResponse.sessionID)
+//                KeychainManager.shared.save(key: "sessionId", string: sessionResponse.sessionID)
                 print("SUCCESS LOGIN")
-                onSuccess()
+//                onSuccess()
+                onSuccess(sessionResponse.sessionID)
             } catch {
                 errorMessage = "Ошибка авторизации"
             }
