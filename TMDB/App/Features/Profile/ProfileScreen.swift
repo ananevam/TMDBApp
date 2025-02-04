@@ -3,7 +3,7 @@ import Kingfisher
 
 struct ProfileScreen: View {
 
-    @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var auth: AuthManager
     @StateObject var viewModel = ProfileScreenViewModel()
     var body: some View {
         Screen {
@@ -11,7 +11,7 @@ struct ProfileScreen: View {
                 GeometryReader { geometry in
                     ScrollView {
                         VStack {
-                            if let user = userViewModel.user {
+                            if let user = auth.user {
                                 KFImage.url(user.gravatarImageURL)
                                     .resizable()
                                     .placeholder { ProgressView() }
@@ -23,7 +23,7 @@ struct ProfileScreen: View {
                                     .font(.title)
 
                                 Button("Выйти") {
-                                    userViewModel.logout()
+                                    auth.logout()
                                 }
                                 .padding()
                             } else {
@@ -38,9 +38,6 @@ struct ProfileScreen: View {
                     }
                 }
             }
-        }.onLoad{
-            viewModel.configure(userViewModel)
-            await viewModel.load()
-        }
+        }.onLoad(viewModel.load)
     }
 }

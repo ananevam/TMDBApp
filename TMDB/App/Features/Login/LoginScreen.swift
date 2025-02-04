@@ -2,7 +2,7 @@ import SwiftUI
 import Alamofire
 
 struct LoginScreen: View {
-    @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var auth: AuthManager
     @StateObject private var viewModel = LoginScreenViewModel()
 
     var body: some View {
@@ -26,7 +26,7 @@ struct LoginScreen: View {
                 ProgressView()
             } else {
                 Button(action: {
-                    viewModel.login(onSuccess: userViewModel.onSuccessLogin)
+                    viewModel.login()
                 }, label: {
                     Text("Login")
                         .frame(maxWidth: .infinity)

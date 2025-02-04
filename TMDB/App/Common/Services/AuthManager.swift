@@ -1,10 +1,12 @@
 import SwiftUI
 
 @MainActor
-class UserViewModel: ObservableObject {
+class AuthManager: ObservableObject {
     @Published var isAuthenticated = false
     @Published var user: AccountResponse?
     let sessionStoreKey = "sessionId"
+
+    static let shared: AuthManager = AuthManager()
 
     var sessionId: String? {
         didSet {
@@ -38,9 +40,9 @@ class UserViewModel: ObservableObject {
             // self.isAuthenticated = false
         }
     }
-    func onSuccessLogin(_ sessionId: String) {
-        self.sessionId = sessionId
-    }
+//    func onSuccessLogin(_ sessionId: String) {
+//        self.sessionId = sessionId
+//    }
     func logout() {
         sessionId = nil
     }

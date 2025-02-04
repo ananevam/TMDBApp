@@ -19,7 +19,7 @@ class LoginScreenViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func login(onSuccess: @escaping (String) -> Void) {
+    func login() {
         isLoading = true
         errorMessage = nil
 
@@ -39,7 +39,7 @@ class LoginScreenViewModel: ObservableObject {
 //                KeychainManager.shared.save(key: "sessionId", string: sessionResponse.sessionID)
                 print("SUCCESS LOGIN")
 //                onSuccess()
-                onSuccess(sessionResponse.sessionID)
+                AuthManager.shared.sessionId = sessionResponse.sessionID
             } catch {
                 errorMessage = "Ошибка авторизации"
             }

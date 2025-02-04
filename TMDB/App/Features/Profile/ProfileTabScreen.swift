@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct ProfileTabScreen: View {
-    @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var auth: AuthManager
     var body: some View {
         Group {
-            if userViewModel.isAuthenticated {
+            if auth.isAuthenticated {
                 ProfileScreen()
             } else {
                 LoginScreen()
