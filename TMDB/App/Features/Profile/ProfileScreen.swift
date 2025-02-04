@@ -2,16 +2,19 @@ import SwiftUI
 import Kingfisher
 
 struct ProfileScreen: View {
-
     @EnvironmentObject var auth: AuthManager
     @StateObject var viewModel = ProfileScreenViewModel()
+
     var body: some View {
-        Screen {
-            LoadingErrorView(viewModel: viewModel) { state in
-                GeometryReader { geometry in
-                    ScrollView {
-                        VStack {
-                            if let user = auth.user {
+        guard case let .loggedIn(user, _) = auth.state else {
+            return AnyView(Text("Not logged in"))
+        }
+        return AnyView(
+            Screen {
+                LoadingErrorView(viewModel: viewModel) { state in
+                    GeometryReader { geometry in
+                        ScrollView {
+                            VStack {
                                 KFImage.url(user.gravatarImageURL)
                                     .resizable()
                                     .placeholder { ProgressView() }
@@ -26,18 +29,17 @@ struct ProfileScreen: View {
                                     auth.logout()
                                 }
                                 .padding()
-                            } else {
-                                Text("Ошибка загрузки профиля")
-                            }
-                            if !state.favoriteMovies.isEmpty {
-                                ContentSectionView(title: "Favorite Movies") {
-                                    HListMoviesView(movies: state.favoriteMovies)
+
+                                if !state.favoriteMovies.isEmpty {
+                                    ContentSectionView(title: "Favorite Movies") {
+                                        HListMoviesView(movies: state.favoriteMovies)
+                                    }
                                 }
-                            }
-                        }.frame(maxWidth: .infinity).padding(.horizontal, 16)
+                            }.frame(maxWidth: .infinity).padding(.horizontal, 16)
+                        }
                     }
                 }
-            }
-        }.onLoad(viewModel.load)
+            }.onLoad(viewModel.load)
+        )
     }
 }

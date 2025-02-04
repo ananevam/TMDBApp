@@ -4,9 +4,10 @@ struct ProfileTabScreen: View {
     @EnvironmentObject var auth: AuthManager
     var body: some View {
         Group {
-            if auth.isAuthenticated {
+            switch auth.state {
+            case .loggedIn:
                 ProfileScreen()
-            } else {
+            case .notLoggedIn:
                 LoginScreen()
             }
         }

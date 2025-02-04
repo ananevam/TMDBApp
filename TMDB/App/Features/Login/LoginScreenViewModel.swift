@@ -35,11 +35,12 @@ class LoginScreenViewModel: ObservableObject {
                 let sessionResponse = try await TMDBService.shared.createSession(
                     requestToken: validateLoginResponse.requestToken
                 )
+                let user = try await TMDBService.shared.getAccount(sessionId: sessionResponse.sessionID)
 
 //                KeychainManager.shared.save(key: "sessionId", string: sessionResponse.sessionID)
                 print("SUCCESS LOGIN")
 //                onSuccess()
-                AuthManager.shared.sessionId = sessionResponse.sessionID
+                AuthManager.shared.onLogin(user: user, sessionId: sessionResponse.sessionID)
             } catch {
                 errorMessage = "Ошибка авторизации"
             }

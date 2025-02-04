@@ -1,6 +1,6 @@
 import Foundation
 
-struct AccountResponse: Decodable {
+struct AccountResponse: Codable {
     let id: Int
     let username: String
     let name: String?
@@ -12,11 +12,11 @@ struct AccountResponse: Decodable {
         case includeAdult = "include_adult"
     }
 
-    struct Gravatar: Decodable {
+    struct Gravatar: Codable {
         let hash: String?
     }
 
-    struct TmdbAvatar: Decodable {
+    struct TmdbAvatar: Codable {
         let avatarPath: String?
         // swiftlint:disable:next nesting
         enum CodingKeys: String, CodingKey {
@@ -24,7 +24,7 @@ struct AccountResponse: Decodable {
         }
     }
 
-    struct Avatar: Decodable {
+    struct Avatar: Codable {
         let gravatar: Gravatar
         let tmdb: TmdbAvatar
     }
