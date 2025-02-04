@@ -1,3 +1,5 @@
+import Foundation
+
 struct AccountResponse: Decodable {
     let id: Int
     let username: String
@@ -26,4 +28,15 @@ struct AccountResponse: Decodable {
         let gravatar: Gravatar
         let tmdb: TmdbAvatar
     }
+
+    var avatarImageURL: URL? {
+        guard let avatarPath = avatar.tmdb.avatarPath else { return nil }
+        return URL(string: "https://image.tmdb.org/t/p/w500\(avatarPath)")
+    }
+
+    var gravatarImageURL: URL? {
+        guard let hash = avatar.gravatar.hash else { return nil }
+        return URL(string: "https://www.gravatar.com/avatar/\(hash)?s=500&d=identicon")
+    }
+
 }

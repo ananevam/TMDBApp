@@ -91,6 +91,17 @@ class TMDBService {
     func getTrendingMovies() async throws -> ApiResults<Movie> {
         try await request("trending/movie/day").serializingDecodable(ApiResults<Movie>.self).value
     }
+
+    func getFavoriteMovies(accountId: Int, sessionId: String) async throws -> ApiResults<Movie> {
+        let parameters: Parameters = [
+            "session_id": sessionId,
+        ]
+        return try await request(
+            "account/\(accountId)/favorite/movies",
+            parameters: parameters
+        ).serializingDecodable(ApiResults<Movie>.self).value
+    }
+
     func getTrendingTv() async throws -> ApiResults<TVShow> {
         try await request("trending/tv/day").serializingDecodable(ApiResults<TVShow>.self).value
     }

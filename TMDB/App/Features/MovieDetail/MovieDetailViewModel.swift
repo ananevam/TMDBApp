@@ -29,7 +29,7 @@ class MovieDetailViewModel: BaseScreenViewModel<MovieDetailState> {
             requestVideos,
             requestCredits
         )
-        // return try await (requestMovie, requestRecommendations)
+
         return MovieDetailState(
             movie: movie,
             recommendations: recommendations.results,
