@@ -15,7 +15,7 @@ struct TVDetailScreen: View {
                     VStack(spacing: 16) {
                         MoviePosterView(movie: state.show)
                         VStack(spacing: 36) {
-                            MovieInfoView(movie: state.show)
+                            MovieInfoView(movie: state.show, accountState: nil)
                             if !state.credits.cast.isEmpty {
                                 ContentSectionView(title: "Cast") {
                                     HListCastView(items: state.credits.cast)

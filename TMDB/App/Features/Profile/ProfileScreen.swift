@@ -25,7 +25,7 @@ struct ProfileScreen: View {
                                 Text(user.username)
                                     .font(.title)
 
-                                Button("Выйти") {
+                                Button("Logout") {
                                     auth.logout()
                                 }
                                 .padding()

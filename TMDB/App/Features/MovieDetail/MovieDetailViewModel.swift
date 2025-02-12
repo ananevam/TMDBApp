@@ -7,6 +7,7 @@ struct MovieDetailState {
     let similar: [Movie]
     let videos: [MovieVideo]
     let credits: CreditsResponse
+    let accountState: AccountState?
 }
 
 class MovieDetailViewModel: BaseScreenViewModel<MovieDetailState> {
@@ -22,12 +23,21 @@ class MovieDetailViewModel: BaseScreenViewModel<MovieDetailState> {
         async let requestSimilar = TMDBService.shared.getMovieSimilar(self.movieId)
         async let requestVideos = TMDBService.shared.getMovieVideos(self.movieId)
         async let requestCredits = TMDBService.shared.getMovieCredits(self.movieId)
-        let (movie, recommendations, similar, videos, credits) = try await (
+
+        async let requestAccountState: AccountState? = {
+            if case let .loggedIn(_, sessionId) = await AuthManager.shared.state {
+                return try await TMDBService.shared.getMovieAccountState(self.movieId, sessionId: sessionId)
+            }
+            return nil
+        }()
+
+        let (movie, recommendations, similar, videos, credits, accountState) = try await (
             requestMovie,
             requestRecommendations,
             requestSimilar,
             requestVideos,
-            requestCredits
+            requestCredits,
+            requestAccountState
         )
 
         return MovieDetailState(
@@ -35,7 +45,8 @@ class MovieDetailViewModel: BaseScreenViewModel<MovieDetailState> {
             recommendations: recommendations.results,
             similar: similar.results,
             videos: videos.results,
-            credits: credits
+            credits: credits,
+            accountState: accountState
         )
     }
 }

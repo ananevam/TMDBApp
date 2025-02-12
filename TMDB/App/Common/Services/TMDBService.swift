@@ -9,7 +9,10 @@ class TMDBService {
     private let baseURL = "https://api.themoviedb.org/3"
     private var cancellables = Set<AnyCancellable>()
 
-    func request(_ url: String, method: HTTPMethod = .get, parameters: Parameters = [:]) -> DataRequest {
+    func request(
+        _ url: String, method: HTTPMethod = .get, parameters: Parameters = [:],
+        encoding: any ParameterEncoding = URLEncoding.default
+    ) -> DataRequest {
         let url = "\(baseURL)/\(url)"
 
 //        let parameters: Parameters = [
@@ -21,7 +24,7 @@ class TMDBService {
             "Authorization": "Bearer \(accessToken)",
         ]
 
-        return AF.request(url, method: method, parameters: parameters, headers: headers).validate()
+        return AF.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers).validate()
     }
 
     func getPopularMovies() async throws -> ApiResults<Movie> {
@@ -38,6 +41,16 @@ class TMDBService {
     }
     func getMovieCredits(_ id: Int) async throws -> CreditsResponse {
         try await request("movie/\(id)/credits").serializingDecodable(CreditsResponse.self).value
+    }
+
+    func getMovieAccountState(_ id: Int, sessionId: String) async throws -> AccountState {
+        let parameters: Parameters = [
+            "session_id": sessionId,
+        ]
+        return try await request(
+            "movie/\(id)/account_states",
+            parameters: parameters
+        ).serializingDecodable(AccountState.self).value
     }
 
     func getTVShow(_ id: Int) async throws -> TVShowDetail {
@@ -132,5 +145,19 @@ class TMDBService {
         return try await request(
             "authentication/session/new", method: .post, parameters: parameters
         ).serializingDecodable(SessionResponse.self).value
+    }
+
+    func markFavorite(
+        _ movieId: Int, accountId: Int, sessionId: String, isFavorite: Bool
+    ) async throws -> StatusResponse {
+        let parameters: [String: Any] = [
+            "media_type": "movie",
+            "media_id": movieId,
+            "favorite": isFavorite
+        ]
+        return try await request(
+            "account/\(accountId)/favorite", method: .post, parameters: parameters,
+            encoding: JSONEncoding.default
+        ).serializingDecodable(StatusResponse.self).value
     }
 }
