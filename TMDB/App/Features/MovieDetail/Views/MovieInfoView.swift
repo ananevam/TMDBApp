@@ -15,7 +15,11 @@ struct MovieInfoView: View {
                 Text("Rate: \(movie.voteAverage, specifier: "%.1f")").font(.footnote)
             }
             if let accountState = accountState {
-                FavoriteIcon(accountState)
+                HStack {
+                    FavoriteIcon(accountState)
+                    WatchlistIcon(accountState)
+                }
+
             }
             if let overview = movie.overview {
                 MovieBlockView(title: "Synopsis") {

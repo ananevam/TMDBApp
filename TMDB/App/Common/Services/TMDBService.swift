@@ -160,4 +160,18 @@ class TMDBService {
             encoding: JSONEncoding.default
         ).serializingDecodable(StatusResponse.self).value
     }
+
+    func markWatchlist(
+        _ movieId: Int, accountId: Int, sessionId: String, isWatchlist: Bool
+    ) async throws -> StatusResponse {
+        let parameters: [String: Any] = [
+            "media_type": "movie",
+            "media_id": movieId,
+            "watchlist": isWatchlist
+        ]
+        return try await request(
+            "account/\(accountId)/watchlist", method: .post, parameters: parameters,
+            encoding: JSONEncoding.default
+        ).serializingDecodable(StatusResponse.self).value
+    }
 }

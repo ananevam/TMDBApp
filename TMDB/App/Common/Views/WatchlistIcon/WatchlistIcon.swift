@@ -1,16 +1,16 @@
 import SwiftUI
 
-struct FavoriteIcon: View {
-    @StateObject private var viewModel: FavoriteIconViewModel
+struct WatchlistIcon: View {
+    @StateObject private var viewModel: WatchlistIconViewModel
 
     init(_ state: AccountState) {
-        _viewModel = StateObject(wrappedValue: FavoriteIconViewModel(state))
+        _viewModel = StateObject(wrappedValue: WatchlistIconViewModel(state))
     }
     var icon: String {
-        viewModel.isFavorite ? "heart.fill" : "heart"
+        viewModel.isWatchlist ? "bookmark.fill" : "bookmark"
     }
     var color: Color {
-        viewModel.isFavorite ? .red : .gray
+        viewModel.isWatchlist ? .blue : .gray
     }
     var body: some View {
         IconWrapper(action: viewModel.onTap) {
